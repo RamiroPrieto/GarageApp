@@ -9,7 +9,8 @@ import { PasswordInput } from "../../components/PasswordInput/PasswordInput";
 import { Button } from "../../components/Button";
 import { SocialButton } from "../../components/SocialButton";
 
-import { apiFetch, setAuthToken } from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
+import { apiFetch } from "../../api/api";
 
 export function LoginScreen() {
   const [mode, setMode] =
@@ -24,59 +25,36 @@ export function LoginScreen() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const testAuth = async () => {
-    try {
-      const data = await apiFetch("/users/me");
-
-      console.log("USUARIO AUTENTICADO:");
-      console.log(data);
-    } catch (error) {
-      console.log("ERROR AUTH:");
-      console.log(error);
-    }
-  };
+  const { login } = useAuth();
 
   const handleSubmit = async () => {
     try {
       setError("");
       setLoading(true);
 
-      const endpoint =
-        mode === "login"
-          ? "/auth/login"
-          : "/auth/register";
-
-      const body =
-        mode === "login"
-          ? {
-              email,
-              password,
-            }
-          : {
-              firstName,
-              lastName,
-              email,
-              password,
-            };
-
-      const data = await apiFetch(endpoint, {
-        method: "POST",
-        body: JSON.stringify(body),
-      });
-
       if (mode === "login") {
-        await setAuthToken(data.accessToken);
+        await login(email, password);
 
         console.log("Login exitoso");
-        console.log(data);
 
-        await testAuth();
-      } else {
-        console.log("Registro exitoso");
-        console.log(data);
-
-        setMode("login");
+        return;
       }
+
+      const data = await apiFetch("/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+        }),
+      });
+
+      console.log("Registro exitoso");
+      console.log(data);
+
+      setMode("login");
+      setPassword("");
     } catch (error) {
       setError(
         error instanceof Error

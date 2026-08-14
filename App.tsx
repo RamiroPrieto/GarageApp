@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StripeProvider } from "@stripe/stripe-react-native";
 
 import { AppNavigator } from "./src/navigation/AppNavigator";
+import { AuthProvider } from "./src/context/AuthContext";
 
 export default function App() {
   return (
@@ -10,9 +11,11 @@ export default function App() {
         process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!
       }
     >
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <AuthProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </AuthProvider>
     </StripeProvider>
   );
 }
