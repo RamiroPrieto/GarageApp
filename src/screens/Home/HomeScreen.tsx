@@ -1,46 +1,56 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { globalStyles } from "../../theme/global.styles";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, {
+  Marker,
+  PROVIDER_GOOGLE,
+} from "react-native-maps";
 import { useEffect, useState } from "react";
 
 import { getGarages } from "../../api/garage.api";
 import { Garage } from "../../types/garage.types";
 
-
 export function HomeScreen() {
-  
   const [garages, setGarages] = useState<Garage[]>([]);
 
   useEffect(() => {
     const loadGarages = async () => {
-      const data = await getGarages();
-      setGarages(data);
+      try {
+        const data = await getGarages();
+        setGarages(data);
+
+        // console.log("GARAGES RECIBI
+        
+      } catch (error) {
+        console.log("ERROR CARGANDO GARAGES:");
+        console.log(error);
+      }
     };
 
     loadGarages();
   }, []);
 
   return (
-    <View style={globalStyles.screen}>
+    <View style={globalStyles.map}>
       <MapView
         style={{ flex: 1 }}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
-          latitude: -37.9992,
-          longitude: -57.5486,
+          latitude: 45.0703,
+          longitude: 7.6869,
           latitudeDelta: 0.02,
           longitudeDelta: 0.02,
         }}
         onMapReady={() => console.log("Mapa listo")}
       >
-        {garages.map((garage) => (
+        {garages.map((parking) => (
           <Marker
-            key={garage.id}
+            key={parking.id}
             coordinate={{
-              latitude: garage.latitude,
-              longitude: garage.longitude,
+              latitude: Number(parking.latitude),
+              longitude: Number(parking.longitude),
             }}
-            title={garage.name}
+            title={parking.title}
+            description={`$${parking.pricePerHour} por hora`}
           />
         ))}
       </MapView>

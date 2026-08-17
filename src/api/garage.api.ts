@@ -1,7 +1,6 @@
-import { garages } from "../mocks/garages";
+import { apiFetch } from "./api";
+import { Garage } from "../types/garage.types";
 
-export async function getGarages() {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  return garages;
+export async function getGarages(): Promise<Garage[]> {
+  return apiFetch("/parkings");
 }

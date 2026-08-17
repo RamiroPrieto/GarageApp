@@ -12,7 +12,7 @@ export function PaymentScreen() {
 
   const [loading, setLoading] = useState(false);
 
-  const reservationId = 4;
+  const reservationId = 7;
 
   const handlePayment = async () => {
     try {

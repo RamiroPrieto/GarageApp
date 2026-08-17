@@ -29,7 +29,7 @@ export function AppNavigator() {
       {isAuthenticated ? (
         <Stack.Screen
           name="Home"
-          component={PaymentScreen}
+          component={HomeScreen}
         />
       ) : (
         <Stack.Screen
