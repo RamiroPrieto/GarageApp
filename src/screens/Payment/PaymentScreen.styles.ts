@@ -1,0 +1,12 @@
+import { StyleSheet } from "react-native";
+import { colors } from "../../theme/colors";
+import { typography } from "../../theme/typography";
+
+export const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: colors.background }, content: { flex: 1, padding: 24, paddingTop: 30 },
+  eyebrow: { color: colors.accent, fontSize: 11, letterSpacing: 0.9, ...typography.medium, marginBottom: 6 }, title: { color: colors.text, fontSize: 26, ...typography.semiBold }, parking: { color: colors.textSecondary, fontSize: 13, ...typography.regular, marginTop: 6, marginBottom: 24 },
+  method: { flexDirection: "row", alignItems: "center", gap: 12, padding: 14, backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: 14, marginBottom: 16 }, methodIcon: { width: 38, height: 38, borderRadius: 11, backgroundColor: colors.primary, justifyContent: "center", alignItems: "center" }, methodTitle: { color: colors.text, fontSize: 14, ...typography.medium }, methodText: { color: colors.textSecondary, fontSize: 11, ...typography.regular, marginTop: 3 },
+  card: { height: 156, borderRadius: 16, backgroundColor: colors.primary, padding: 19, marginBottom: 20, overflow: "hidden" }, chip: { width: 30, height: 22, borderRadius: 4, backgroundColor: "#B1A8FF" }, cardIcon: { position: "absolute", right: 18, top: 16 }, cardDots: { color: colors.text, fontSize: 20, letterSpacing: 1.7, ...typography.medium, marginTop: 27 }, cardFooter: { flexDirection: "row", justifyContent: "space-between", marginTop: 15 }, cardCaption: { color: "#F4F5FA", fontSize: 10, lineHeight: 15, ...typography.medium },
+  summary: { backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: 14, padding: 15, marginBottom: 20 }, summaryRow: { flexDirection: "row", justifyContent: "space-between", marginBottom: 10 }, summaryLabel: { color: colors.textSecondary, fontSize: 12, ...typography.regular }, summaryValue: { color: colors.text, fontSize: 12, ...typography.medium }, totalRow: { flexDirection: "row", justifyContent: "space-between", borderTopWidth: 1, borderTopColor: colors.border, paddingTop: 13, marginTop: 3 }, totalLabel: { color: colors.text, fontSize: 14, ...typography.semiBold }, totalValue: { color: colors.primary, fontSize: 16, ...typography.semiBold },
+  security: { color: colors.textMuted, textAlign: "center", fontSize: 10, ...typography.regular, marginTop: 15 }, logout: { color: colors.textSecondary, textAlign: "center", fontSize: 12, ...typography.medium, marginTop: 18 },
+});

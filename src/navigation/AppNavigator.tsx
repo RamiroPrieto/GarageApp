@@ -4,9 +4,9 @@ import { LoginScreen } from "../screens/Login";
 import { HomeScreen } from "../screens/Home";
 import { useAuth } from "../context/AuthContext";
 import { PaymentScreen } from "../screens/Payment/PaymentScreen";
-
+import { ReservationScreen } from "../screens/Reservation";
 import { RootStackParamList } from "./navigation.types";
-
+import { SearchScreen } from "../screens/Search";
 const Stack =
   createNativeStackNavigator<RootStackParamList>();
 
@@ -27,9 +27,13 @@ export function AppNavigator() {
       }}
     >
       {isAuthenticated ? (
+        // <Stack.Screen
+        //   name="Home"
+        //   component={HomeScreen}
+        // />
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="Search"
+          component={SearchScreen}
         />
       ) : (
         <Stack.Screen
@@ -38,9 +42,21 @@ export function AppNavigator() {
         />
       )}
       <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+        />
+      <Stack.Screen
         name="Payment"
         component={PaymentScreen}
       />
+      <Stack.Screen
+        name="Reservation"
+        component={ReservationScreen}
+      />
+      {/* <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+      /> */}
     </Stack.Navigator>
   );
 }

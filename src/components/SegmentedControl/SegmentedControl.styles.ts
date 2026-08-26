@@ -1,12 +1,14 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../theme/colors";
+import { typography } from "../../theme/typography";
 
 export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: "#1C1F2A",
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 4,
-    marginBottom: 8
+    marginBottom: 20,
   },
 
   button: {
@@ -17,15 +19,16 @@ export const styles = StyleSheet.create({
   },
 
   activeButton: {
-    backgroundColor: "#6C63FF",
+    backgroundColor: colors.primary,
   },
 
   text: {
-    color: "#8B90A0",
-    fontWeight: "600",
+    color: colors.textSecondary,
+    fontSize: 13,
+    ...typography.medium,
   },
 
   activeText: {
-    color: "#FFF",
+    color: colors.text,
   },
 });

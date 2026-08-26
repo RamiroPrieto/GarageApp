@@ -1,37 +1,31 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../theme/colors";
+import { typography } from "../../theme/typography";
 
 export const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    marginBottom: 20,
-  },
-
+  container: { width: "100%", marginBottom: 17 },
   label: {
     marginBottom: 8,
-    color: "#FFFFFF",
-    fontWeight: "600",
+    color: colors.textSecondary,
+    fontSize: 11,
+    letterSpacing: 0.55,
+    ...typography.medium,
   },
-
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#1C1F2A",
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
     borderRadius: 12,
-    color: "#FFFFFF",
     paddingHorizontal: 16,
   },
-
   input: {
-    backgroundColor: "#1C1F2A",
-    borderRadius: 12,
-    // paddingHorizontal: 16,
     height: 56,
-    color: "#FFF",
-    fontSize: 16,
-    flex: 1
+    color: colors.text,
+    fontSize: 14,
+    ...typography.regular,
+    flex: 1,
   },
-
-  eye: {
-    fontSize: 20,
-  },
+  eye: { fontSize: 20 },
 });

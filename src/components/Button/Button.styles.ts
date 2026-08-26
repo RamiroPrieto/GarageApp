@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../theme/colors";
+import { typography } from "../../theme/typography";
 
 export const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.primary,
-    height: 56,
-    borderRadius: 16,
+    height: 54,
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
@@ -18,6 +19,6 @@ export const styles = StyleSheet.create({
   text: {
     color: colors.text,
     fontSize: 16,
-    fontWeight: "600",
+    ...typography.semiBold,
   },
 });

@@ -1,28 +1,35 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../theme/colors";
+import { typography } from "../../theme/typography";
 
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 17,
   },
 
   label: {
-    color: "#FFFFFF",
+    color: colors.textSecondary,
     marginBottom: 8,
-    fontWeight: "600",
+    fontSize: 11,
+    letterSpacing: 0.55,
+    ...typography.medium,
   },
 
   input: {
-    backgroundColor: "#1C1F2A",
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
     borderRadius: 12,
     paddingHorizontal: 16,
     height: 56,
-    color: "#FFF",
-    fontSize: 16,
+    color: colors.text,
+    fontSize: 14,
+    ...typography.regular,
   },
 
   error: {
-    color: "#EF4444",
+    color: colors.danger,
     marginTop: 6,
     fontSize: 12,
   },

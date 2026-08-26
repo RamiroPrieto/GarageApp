@@ -1,47 +1,17 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../theme/colors";
+import { typography } from "../../theme/typography";
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#FFF",
-  },
-
-  title: {
-    fontSize: 32,
-    fontWeight: "700",
-    color: "#111827",
-    marginBottom: 24,
-  },
-
-  forgotPassword:{
-    color: "white",
-    marginBottom: 20,
-    width: "100%",
-    textAlign: "right"
-  },
-
-  subtitle: {
-    fontSize: 16,
-    color: "#6B7280",
-  },
-
-  divider: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 24,
-  },
-  
-  line: {
-    flex: 1,
-    height: 1,
-    backgroundColor: "#2B2F3A",
-  },
-  
-  dividerText: {
-    color: "#8B90A0",
-    marginHorizontal: 12,
-    fontSize: 12,
-  },
+  screen: { flex: 1, backgroundColor: colors.background },
+  hero: { height: 180, justifyContent: "flex-end", padding: 28, paddingBottom: 30, backgroundColor: colors.surfaceMuted, borderBottomWidth: 1, borderBottomColor: colors.border },
+  eyebrow: { color: colors.accent, fontSize: 11, letterSpacing: 1.1, ...typography.medium, marginBottom: 5 },
+  brand: { color: colors.text, fontSize: 29, ...typography.semiBold },
+  form: { flex: 1, paddingHorizontal: 38, paddingTop: 18 },
+  forgotPassword: { color: colors.primary, fontSize: 12, ...typography.medium, marginBottom: 22, width: "100%", textAlign: "right" },
+  error: { color: colors.danger, fontSize: 12, ...typography.regular, marginBottom: 12 },
+  divider: { flexDirection: "row", alignItems: "center", marginVertical: 25 },
+  line: { flex: 1, height: 1, backgroundColor: colors.border },
+  dividerText: { color: colors.textMuted, marginHorizontal: 12, fontSize: 11, ...typography.regular },
+  socialRow: { flexDirection: "row", gap: 12 },
 });

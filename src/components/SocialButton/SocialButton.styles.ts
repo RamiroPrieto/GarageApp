@@ -1,12 +1,15 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../theme/colors";
+import { typography } from "../../theme/typography";
 
 export const styles = StyleSheet.create({
   button: {
     flex: 1,
-    height: 56,
-    borderRadius: 14,
+    height: 46,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#2B2F3A",
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
 
     flexDirection: "row",
     justifyContent: "center",
@@ -16,7 +19,8 @@ export const styles = StyleSheet.create({
   },
 
   text: {
-    color: "white",
-    fontWeight: "600",
+    color: colors.text,
+    fontSize: 13,
+    ...typography.medium,
   },
 });
