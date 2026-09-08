@@ -15,9 +15,12 @@ import { globalStyles } from "../../theme/global.styles";
 import { styles } from "./SearchScreen.styles";
 import { getMyVehicles } from "../../api/vehicle.api";
 import { Vehicle } from "../../types/vehicle.type";
+import { RootStackParamList } from "../../navigation/navigation.types";
 
 export function SearchScreen() {
-  const navigation = useNavigation<NativeStackNavigationProp<import("../../navigation/navigation.types").RootStackParamList, "Search">>();
+  const navigation = useNavigation<
+    NativeStackNavigationProp<RootStackParamList, "Search">
+  >();
 
   const [date, setDate] = useState(new Date());
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -101,10 +104,8 @@ export function SearchScreen() {
       console.log("Seleccioná un vehículo");
       return;
     }
-    navigation.navigate("Home", {
-      vehicleId: selectedVehicle.id,
-      startDatetime: startDatetime.toISOString(),
-      endDatetime: endDatetime.toISOString(),
+    navigation.navigate("MainTabs", {
+      screen: "Home",
     });
   };
 

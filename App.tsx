@@ -9,6 +9,7 @@ import {
 } from "@expo-google-fonts/inter";
 import { AppNavigator } from "./src/navigation/AppNavigator";
 import { AuthProvider } from "./src/context/AuthContext";
+import { I18nProvider } from "./src/context/I18nContext";
 
 export default function App() {
 
@@ -29,11 +30,13 @@ export default function App() {
         process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!
       }
     >
-      <AuthProvider>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
-      </AuthProvider>
+      <I18nProvider>
+        <AuthProvider>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </AuthProvider>
+      </I18nProvider>
     </StripeProvider>
   );
 }

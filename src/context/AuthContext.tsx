@@ -27,6 +27,7 @@ import {
     isLoading: boolean;
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<void>;
+    loginWithGoogle: (idToken: string) => Promise<void>;
     logout: () => Promise<void>;
   };
   
@@ -97,6 +98,12 @@ import {
       await clearAuthToken();
       setUser(null);
     };
+
+    const loginWithGoogle = async (idToken: string) => {
+      const data = await apiFetch("/auth/google", { method: "POST", body: JSON.stringify({ idToken }) });
+      await setAuthToken(data.accessToken);
+      setUser(await apiFetch("/users/me"));
+    };
   
     return (
       <AuthContext.Provider
@@ -105,6 +112,7 @@ import {
           isLoading,
           isAuthenticated: !!user,
           login,
+          loginWithGoogle,
           logout,
         }}
       >

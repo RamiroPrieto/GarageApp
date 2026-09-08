@@ -1,6 +1,10 @@
 import * as SecureStore from "expo-secure-store";
 
-const API_URL = "http://192.168.0.111:3000";
+import { t } from "../i18n/translate";
+
+const API_URL = "https://garageappbackend-production.up.railway.app";
+
+// const API_URL = "http://192.168.0.111:3000";
 
 const TOKEN_KEY = "auth_token";
 
@@ -60,7 +64,7 @@ export async function apiFetch(
 
   if (!response.ok) {
     throw new Error(
-      data?.message || "Error en la solicitud",
+      data?.message || t("common.requestError"),
     );
   }
 

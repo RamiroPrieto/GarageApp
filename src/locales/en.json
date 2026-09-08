@@ -1,0 +1,150 @@
+{
+  "common": {
+    "comingSoon": "Coming soon",
+    "requestError": "Request error",
+    "unknownError": "Something went wrong",
+    "error": "Error"
+  },
+  "auth": {
+    "welcome": "WELCOME TO",
+    "login": "Log in",
+    "register": "Sign up",
+    "firstName": "FIRST NAME",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastName": "LAST NAME",
+    "lastNamePlaceholder": "Enter your last name",
+    "phone": "PHONE",
+    "email": "EMAIL",
+    "emailPlaceholder": "you@email.com",
+    "password": "PASSWORD",
+    "passwordPlaceholder": "At least 8 characters",
+    "forgotPassword": "Forgot your password?",
+    "orContinueWith": "or continue with",
+    "invalidEmail": "Enter a valid email",
+    "passwordMin": "The password must be at least 8 characters",
+    "completeFields": "Fill in all fields",
+    "invalidPhone": "Enter a valid phone number",
+    "registerCheckEmail": "Check your email to confirm your account before logging in.",
+    "genericError": "Something went wrong",
+    "googleError": "Unable to sign in with Google",
+    "googleInvalidCredential": "Google did not return a valid credential",
+    "appleUnavailable": "Apple Sign-In is not available yet"
+  },
+  "tabs": {
+    "home": "Home",
+    "reservations": "Bookings",
+    "settings": "Settings"
+  },
+  "home": {
+    "nearbyParking": "Available parking"
+  },
+  "parking": {
+    "perHour": "per hour",
+    "spacesAvailable": "Spaces available",
+    "unavailable": "Unavailable",
+    "dimensions": "Max height {{height}} m · Max width {{width}} m",
+    "reserve": "Book →",
+    "fallbackName": "Parking #{{id}}",
+    "addressUnavailable": "Address unavailable"
+  },
+  "search": {
+    "title": "Find your parking",
+    "subtitle": "Choose when you need to park",
+    "location": "Location",
+    "date": "Date",
+    "entryTime": "Entry time",
+    "exitTime": "Exit time",
+    "vehicle": "Vehicle",
+    "selectVehicle": "Select vehicle",
+    "cta": "Search parking"
+  },
+  "reservation": {
+    "title": "Confirm your booking",
+    "parking": "Parking",
+    "vehicle": "Vehicle",
+    "noVehicle": "No vehicle",
+    "date": "Date",
+    "entry": "Entry",
+    "exit": "Exit",
+    "confirmAndPay": "Confirm and pay"
+  },
+  "reservationResult": {
+    "successTitle": "Booking confirmed",
+    "failureTitle": "Booking not completed",
+    "successDescription": "Your parking spot was booked successfully.",
+    "failureDescription": "The payment was not completed. You can try again.",
+    "backHome": "Back to home"
+  },
+  "reservations": {
+    "eyebrow": "YOUR STAYS",
+    "title": "My bookings",
+    "empty": "You don’t have any bookings yet",
+    "upcoming": "Upcoming",
+    "previous": "Previous",
+    "noUpcoming": "No upcoming bookings",
+    "noPrevious": "No previous bookings",
+    "loadError": "Unable to load bookings",
+    "status": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed",
+      "EXPIRED": "Expired"
+    }
+  },
+  "upcomingReservation": {
+    "eyebrow": "UPCOMING BOOKING",
+    "today": "Today"
+  },
+  "settings": {
+    "eyebrow": "PREFERENCES",
+    "title": "Settings",
+    "profileName": "Your profile",
+    "profileSubtitle": "Manage your information",
+    "edit": "Edit",
+    "preferences": "PREFERENCES",
+    "notifications": "Notifications",
+    "notificationsSubtitle": "Updates about your bookings",
+    "paymentMethod": "Payment method",
+    "paymentMethodSubtitle": "Saved cards and methods",
+    "vehicles": "Vehicles",
+    "vehiclesSubtitle": "Manage your vehicles",
+    "settings": "SETTINGS",
+    "privacy": "Privacy",
+    "privacySubtitle": "Data and permissions",
+    "language": "Language",
+    "help": "Support",
+    "helpSubtitle": "Need help?",
+    "account": "ACCOUNT",
+    "logout": "Log out",
+    "logoutTitle": "Log out",
+    "logoutMessage": "Are you sure you want to log out?",
+    "cancel": "Cancel",
+    "languageSystem": "System",
+    "languageEs": "Español",
+    "languageIt": "Italiano",
+    "languageEn": "English"
+  },
+  "payment": {
+    "secure": "SECURE PAYMENT",
+    "title": "Complete your booking",
+    "reservation": "Booking #{{id}}",
+    "card": "Card",
+    "cardSecure": "Payment will be requested securely",
+    "cardHolder": "CARDHOLDER",
+    "yourName": "YOUR NAME",
+    "expires": "EXPIRES",
+    "subtotal": "Subtotal",
+    "vat": "VAT (21%)",
+    "total": "Total",
+    "payNow": "Pay now",
+    "processing": "Processing...",
+    "security": "100% secure payment · SSL encrypted",
+    "logout": "Log out",
+    "successTitle": "Payment completed",
+    "successMessage": "The payment was processed successfully."
+  },
+  "testApi": {
+    "button": "Test connection"
+  }
+}

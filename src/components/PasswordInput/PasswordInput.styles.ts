@@ -28,4 +28,5 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   eye: { fontSize: 20 },
+  error: { color: colors.danger, fontSize: 12, marginTop: 6, ...typography.regular },
 });

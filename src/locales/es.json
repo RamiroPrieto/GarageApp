@@ -1,0 +1,150 @@
+{
+  "common": {
+    "comingSoon": "Próximamente",
+    "requestError": "Error en la solicitud",
+    "unknownError": "Ocurrió un error",
+    "error": "Error"
+  },
+  "auth": {
+    "welcome": "BIENVENIDO A",
+    "login": "Ingresar",
+    "register": "Registrarse",
+    "firstName": "NOMBRE",
+    "firstNamePlaceholder": "Ingresá tu nombre",
+    "lastName": "APELLIDO",
+    "lastNamePlaceholder": "Ingresá tu apellido",
+    "phone": "TELÉFONO",
+    "email": "EMAIL",
+    "emailPlaceholder": "tu@email.com",
+    "password": "CONTRASEÑA",
+    "passwordPlaceholder": "Al menos 8 caracteres",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "orContinueWith": "o continuar con",
+    "invalidEmail": "Ingresá un email válido",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+    "completeFields": "Completá todos los campos",
+    "invalidPhone": "Ingresá un teléfono válido",
+    "registerCheckEmail": "Revisá tu email para confirmar la cuenta antes de iniciar sesión.",
+    "genericError": "Ocurrió un error",
+    "googleError": "No se pudo iniciar sesión con Google",
+    "googleInvalidCredential": "Google no devolvió una credencial válida",
+    "appleUnavailable": "Apple Sign-In todavía no está disponible"
+  },
+  "tabs": {
+    "home": "Home",
+    "reservations": "Reservas",
+    "settings": "Config."
+  },
+  "home": {
+    "nearbyParking": "Parkings disponibles"
+  },
+  "parking": {
+    "perHour": "por hora",
+    "spacesAvailable": "Espacios disponibles",
+    "unavailable": "No disponible",
+    "dimensions": "Altura máxima {{height}} m · Ancho máximo {{width}} m",
+    "reserve": "Reservar →",
+    "fallbackName": "Parking #{{id}}",
+    "addressUnavailable": "Dirección no disponible"
+  },
+  "search": {
+    "title": "Encuentra tu parking",
+    "subtitle": "Seleccioná cuándo necesitás estacionar",
+    "location": "Ubicación",
+    "date": "Fecha",
+    "entryTime": "Hora de entrada",
+    "exitTime": "Hora de salida",
+    "vehicle": "Vehículo",
+    "selectVehicle": "Seleccionar vehículo",
+    "cta": "Buscar parking"
+  },
+  "reservation": {
+    "title": "Confirmá tu reserva",
+    "parking": "Parking",
+    "vehicle": "Vehículo",
+    "noVehicle": "Ningún vehículo",
+    "date": "Fecha",
+    "entry": "Entrada",
+    "exit": "Salida",
+    "confirmAndPay": "Confirmar y pagar"
+  },
+  "reservationResult": {
+    "successTitle": "Reserva confirmada",
+    "failureTitle": "Reserva no completada",
+    "successDescription": "Tu parking se reservó correctamente.",
+    "failureDescription": "El pago no se completó. Podés intentar de nuevo.",
+    "backHome": "Volver al inicio"
+  },
+  "reservations": {
+    "eyebrow": "TUS ESTADÍAS",
+    "title": "Mis reservas",
+    "empty": "Todavía no tenés reservas",
+    "upcoming": "Próximas",
+    "previous": "Anteriores",
+    "noUpcoming": "No hay reservas programadas",
+    "noPrevious": "No hay reservas anteriores",
+    "loadError": "No se pudieron cargar las reservas",
+    "status": {
+      "PENDING": "Pendiente",
+      "CONFIRMED": "Confirmada",
+      "CANCELLED": "Cancelada",
+      "COMPLETED": "Completada",
+      "EXPIRED": "Vencida"
+    }
+  },
+  "upcomingReservation": {
+    "eyebrow": "PRÓXIMA RESERVA",
+    "today": "Hoy"
+  },
+  "settings": {
+    "eyebrow": "PREFERENCIAS",
+    "title": "Configuración",
+    "profileName": "Tu perfil",
+    "profileSubtitle": "Gestioná tu información",
+    "edit": "Editar",
+    "preferences": "PREFERENCIAS",
+    "notifications": "Notificaciones",
+    "notificationsSubtitle": "Novedades sobre tus reservas",
+    "paymentMethod": "Método de pago",
+    "paymentMethodSubtitle": "Tarjetas y métodos guardados",
+    "vehicles": "Vehículos",
+    "vehiclesSubtitle": "Gestioná tus vehículos",
+    "settings": "AJUSTES",
+    "privacy": "Privacidad",
+    "privacySubtitle": "Datos y permisos",
+    "language": "Idioma",
+    "help": "Asistencia",
+    "helpSubtitle": "¿Necesitás ayuda?",
+    "account": "CUENTA",
+    "logout": "Cerrar sesión",
+    "logoutTitle": "Cerrar sesión",
+    "logoutMessage": "¿Estás seguro de que querés cerrar sesión?",
+    "cancel": "Cancelar",
+    "languageSystem": "Sistema",
+    "languageEs": "Español",
+    "languageIt": "Italiano",
+    "languageEn": "English"
+  },
+  "payment": {
+    "secure": "PAGO SEGURO",
+    "title": "Finalizá tu reserva",
+    "reservation": "Reserva #{{id}}",
+    "card": "Tarjeta",
+    "cardSecure": "El pago se solicitará de forma segura",
+    "cardHolder": "TITULAR",
+    "yourName": "TU NOMBRE",
+    "expires": "VENCE",
+    "subtotal": "Subtotal",
+    "vat": "IVA (21%)",
+    "total": "Total",
+    "payNow": "Pagar ahora",
+    "processing": "Procesando...",
+    "security": "Pago 100% seguro · SSL encriptado",
+    "logout": "Cerrar sesión",
+    "successTitle": "Pago realizado",
+    "successMessage": "El pago se procesó correctamente."
+  },
+  "testApi": {
+    "button": "Probar conexión"
+  }
+}

@@ -1,6 +1,4 @@
-import { Garage } from "../types/garage.types";
-
-export const garages: Garage[] = [
+export const garages = [
   {
     id: 1,
     name: "Garage Centro",

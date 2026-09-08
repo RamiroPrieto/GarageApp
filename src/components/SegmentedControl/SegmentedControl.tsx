@@ -1,4 +1,5 @@
 import { Pressable, Text, View } from "react-native";
+import { useI18n } from "../../context/I18nContext";
 import { styles } from "./SegmentedControl.styles";
 import { SegmentedControlProps } from "./SegmentedControl.types";
 
@@ -6,6 +7,8 @@ export function SegmentedControl({
   value,
   onChange,
 }: SegmentedControlProps) {
+  const { t } = useI18n();
+
   return (
     <View style={styles.container}>
       <Pressable
@@ -21,7 +24,7 @@ export function SegmentedControl({
             value === "login" && styles.activeText,
           ]}
         >
-          Ingresar
+          {t("auth.login")}
         </Text>
       </Pressable>
 
@@ -38,7 +41,7 @@ export function SegmentedControl({
             value === "register" && styles.activeText,
           ]}
         >
-          Registrarse
+          {t("auth.register")}
         </Text>
       </Pressable>
     </View>

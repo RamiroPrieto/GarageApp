@@ -1,12 +1,14 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { LoginScreen } from "../screens/Login";
-import { HomeScreen } from "../screens/Home";
 import { useAuth } from "../context/AuthContext";
 import { PaymentScreen } from "../screens/Payment/PaymentScreen";
 import { ReservationScreen } from "../screens/Reservation";
 import { RootStackParamList } from "./navigation.types";
-import { SearchScreen } from "../screens/Search";
+import { ReservationResultScreen } from "../screens/ReservationResult/ReservationResultScreen";
+import { BottomTabNavigator } from "./BottomTabNavigator";
+
+
 const Stack =
   createNativeStackNavigator<RootStackParamList>();
 
@@ -27,24 +29,13 @@ export function AppNavigator() {
       }}
     >
       {isAuthenticated ? (
-        // <Stack.Screen
-        //   name="Home"
-        //   component={HomeScreen}
-        // />
-        <Stack.Screen
-          name="Search"
-          component={SearchScreen}
-        />
+        <Stack.Screen name="MainTabs" component={BottomTabNavigator} />
       ) : (
         <Stack.Screen
           name="Login"
           component={LoginScreen}
         />
       )}
-      <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-        />
       <Stack.Screen
         name="Payment"
         component={PaymentScreen}
@@ -53,10 +44,10 @@ export function AppNavigator() {
         name="Reservation"
         component={ReservationScreen}
       />
-      {/* <Stack.Screen
-        name="Search"
-        component={SearchScreen}
-      /> */}
+      <Stack.Screen
+        name="ReservationResult"
+        component={ReservationResultScreen}
+      />
     </Stack.Navigator>
   );
 }

@@ -1,89 +1,106 @@
-import { View, Text, Alert } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 
-import { RouteProp } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+} from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { useStripe } from "@stripe/stripe-react-native";
+
+import { useEffect, useState } from "react";
+
+import { confirmReservationPayment, createReservation } from "../../api/reservation.api";
+import { getMyVehicles } from "../../api/vehicle.api";
+
+import { apiFetch } from "../../api/api";
+
+import { Button } from "../../components/Button";
 
 import { globalStyles } from "../../theme/global.styles";
 
 import { styles } from "./Reservation.Screen";
 
-import { createReservation } from "../../api/reservation.api";
-
-import { apiFetch } from "../../api/api";
-
-import { useState } from "react";
-
-import { Button } from "../../components/Button";
+import { RootStackParamList } from "../../navigation/navigation.types";
+import { Vehicle } from "../../types/vehicle.type";
 
 type ReservationScreenRouteProp = RouteProp<
-  {
-    Reservation: {
-      parkingId: number;
-      vehicleId: number;
-      startDatetime: string;
-      endDatetime: string;
-    };
-  },
+  RootStackParamList,
+  "Reservation"
+>;
+type ReservationNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
   "Reservation"
 >;
 
-interface Props {
-  route: ReservationScreenRouteProp;
-}
-
 export function ReservationScreen({
   route,
-}: Props) {
+}: {
+  route: ReservationScreenRouteProp;
+}) {
   const {
     parkingId,
-    vehicleId,
     startDatetime,
     endDatetime,
   } = route.params;
 
-  const { initPaymentSheet, presentPaymentSheet } =
-    useStripe();
+  const navigation = useNavigation<ReservationNavigationProp>();
+
+  const {
+    initPaymentSheet,
+    presentPaymentSheet,
+  } = useStripe();
 
   const [loading, setLoading] = useState(false);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
+  const [showVehicles, setShowVehicles] = useState(false);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  useEffect(() => {
+    const loadVehicles = async () => {
+      try {
+        const data = await getMyVehicles();
 
-    return date.toLocaleDateString("it-IT", {
+        setVehicles(data);
+
+        if (data.length > 0) {
+          setSelectedVehicle(data[0]);
+        }
+      } catch (error) {
+        console.log("ERROR CARGANDO VEHICULOS:");
+        console.log(error);
+      }
+    };
+
+    void loadVehicles();
+  }, []);
+
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("it-IT", {
       day: "2-digit",
       month: "long",
       year: "numeric",
     });
-  };
 
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-
-    return date.toLocaleTimeString("it-IT", {
+  const formatTime = (dateString: string) =>
+    new Date(dateString).toLocaleTimeString("it-IT", {
       hour: "2-digit",
       minute: "2-digit",
     });
-  };
 
   const handleConfirmReservation = async () => {
     try {
       setLoading(true);
 
-      // 1. Creamos la reserva como PENDING
+      // 1. Crear reserva en estado PENDING
       const reservation = await createReservation(
         parkingId,
-        vehicleId,
+        selectedVehicle?.id ?? null,
         startDatetime,
         endDatetime,
       );
 
-      console.log(
-        "RESERVA CREADA:",
-        reservation,
-      );
-
-      // 2. Creamos el PaymentIntent
+      // 2. Crear PaymentIntent
       const data = await apiFetch("/payments", {
         method: "POST",
         body: JSON.stringify({
@@ -92,30 +109,27 @@ export function ReservationScreen({
         }),
       });
 
-      const { clientSecret } = data;
-
-      // 3. Inicializamos Stripe
+      // 3. Inicializar Stripe PaymentSheet
       const { error: initError } =
         await initPaymentSheet({
           merchantDisplayName: "GarageApp",
-          paymentIntentClientSecret: clientSecret,
+          paymentIntentClientSecret: data.clientSecret,
         });
 
       if (initError) {
         console.log(
-          "Error inicializando PaymentSheet:",
+          "Error inicializando Stripe:",
           initError,
         );
 
-        Alert.alert(
-          "Errore",
-          initError.message,
-        );
+        navigation.navigate("ReservationResult", {
+          success: false,
+        });
 
         return;
       }
 
-      // 4. Abrimos el modal de Stripe
+      // 4. Mostrar Stripe PaymentSheet
       const { error: paymentError } =
         await presentPaymentSheet();
 
@@ -125,34 +139,38 @@ export function ReservationScreen({
           paymentError,
         );
 
-        if (paymentError.code !== "Canceled") {
-          Alert.alert(
-            "Errore",
-            paymentError.message,
-          );
+        // Si el usuario simplemente cerró/canceló Stripe,
+        // se queda en la pantalla de reserva
+        if (paymentError.code === "Canceled") {
+          return;
         }
+
+        // Error real de pago
+        navigation.navigate("ReservationResult", {
+          success: false,
+        });
 
         return;
       }
 
-      // 5. Pago exitoso
-      Alert.alert(
-        "Pagamento completato",
-        "Il pagamento è stato elaborato correttamente.",
-      );
+      // 5. Stripe completó el pago. El servidor verifica el PaymentIntent antes de confirmar.
+      await confirmReservationPayment(reservation.id);
+
+      // 6. Pago y reserva confirmados
+      navigation.navigate("ReservationResult", {
+        success: true,
+      });
 
     } catch (error) {
       console.log(
-        "ERROR CREANDO RESERVA O PAGO:",
+        "Error durante la reserva:",
         error,
       );
 
-      Alert.alert(
-        "Errore",
-        error instanceof Error
-          ? error.message
-          : "Si è verificato un errore",
-      );
+      navigation.navigate("ReservationResult", {
+        success: false,
+      });
+
     } finally {
       setLoading(false);
     }
@@ -178,13 +196,53 @@ export function ReservationScreen({
         <View style={styles.divider} />
 
         <View style={styles.section}>
-          <Text style={styles.label}>
-            Veicolo
-          </Text>
+          <View style={styles.vehicleHeader}>
+            <Text style={[styles.label, styles.vehicleHeaderLabel]}>
+              Vehículo
+            </Text>
 
-          <Text style={styles.value}>
-            Veicolo #{vehicleId}
-          </Text>
+            <Pressable
+              style={styles.addButton}
+              onPress={() => Alert.alert("Próximamente")}
+              hitSlop={8}
+            >
+              <Text style={styles.addButtonText}>+</Text>
+            </Pressable>
+          </View>
+
+          <Pressable
+            style={styles.vehicleField}
+            onPress={() => setShowVehicles(!showVehicles)}
+          >
+            <Text style={styles.value}>
+              {selectedVehicle
+                ? `${selectedVehicle.brand} ${selectedVehicle.model}`
+                : "Ningún vehículo"}
+            </Text>
+          </Pressable>
+
+          {showVehicles && vehicles.length > 0 && (
+            <View style={styles.vehicleList}>
+              {vehicles.map((vehicle) => (
+                <Pressable
+                  key={vehicle.id}
+                  style={styles.vehicleItem}
+                  onPress={() => {
+                    setSelectedVehicle(vehicle);
+                    setShowVehicles(false);
+                  }}
+                >
+                  <Text style={styles.value}>
+                    {vehicle.brand} {vehicle.model}
+                  </Text>
+
+                  <Text style={styles.vehiclePlate}>
+                    {vehicle.licensePlate}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          )}
         </View>
 
         <View style={styles.divider} />
@@ -221,13 +279,11 @@ export function ReservationScreen({
           </View>
         </View>
 
-        {/* <View style={styles.buttonContainer}> */}
-          <Button
-            title="Conferma e paga"
-            loading={loading}
-            onPress={handleConfirmReservation}
-          />
-        {/* </View> */}
+        <Button
+          title="Conferma e paga"
+          loading={loading}
+          onPress={handleConfirmReservation}
+        />
       </View>
     </View>
   );

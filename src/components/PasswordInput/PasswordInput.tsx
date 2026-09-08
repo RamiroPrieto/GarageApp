@@ -6,7 +6,7 @@ import { PasswordInputProps } from "./PasswordInput.types";
 import { styles } from "./PasswordInput.styles";
 import { colors } from "../../theme/colors";
 
-export function PasswordInput({ label, ...props }: PasswordInputProps) {
+export function PasswordInput({ label, error, ...props }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -27,6 +27,7 @@ export function PasswordInput({ label, ...props }: PasswordInputProps) {
           />
         </Pressable>
       </View>
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 }

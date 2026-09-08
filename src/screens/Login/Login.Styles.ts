@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
   form: { flex: 1, paddingHorizontal: 38, paddingTop: 18 },
   forgotPassword: { color: colors.primary, fontSize: 12, ...typography.medium, marginBottom: 22, width: "100%", textAlign: "right" },
   error: { color: colors.danger, fontSize: 12, ...typography.regular, marginBottom: 12 },
+  notice: { color: colors.success, fontSize: 12, ...typography.regular, marginBottom: 12 },
   divider: { flexDirection: "row", alignItems: "center", marginVertical: 25 },
   line: { flex: 1, height: 1, backgroundColor: colors.border },
   dividerText: { color: colors.textMuted, marginHorizontal: 12, fontSize: 11, ...typography.regular },
