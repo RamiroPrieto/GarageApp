@@ -7,9 +7,12 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { colors } from "../../theme/colors";
 import { styles } from "./Settings.styles";
+import { RootStackParamList } from "../../navigation/navigation.types";
 
 type SettingsRowProps = {
   title: string;
@@ -58,6 +61,7 @@ function SettingsRow({
 }
 
 export function SettingsScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const handleLogout = () => {
     Alert.alert(
       "Cerrar sesión",
@@ -140,6 +144,20 @@ export function SettingsScreen() {
         </Text>
 
         <View style={styles.group}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.publishParking,
+              pressed && { opacity: 0.7 },
+            ]}
+            onPress={() => navigation.navigate("CreateParking")}
+          >
+            <View style={styles.rowText}>
+              <Text style={styles.rowTitle}>Publicar mi estacionamiento</Text>
+              <Text style={styles.rowSubtitle}>Ofrecé tu lugar para estacionar</Text>
+            </View>
+            <Ionicons name="add-circle-outline" size={21} color={colors.primary} />
+          </Pressable>
+
           <SettingsRow
             title="Privacy"
             subtitle="Dati e autorizzazioni"

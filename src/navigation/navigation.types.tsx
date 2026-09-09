@@ -9,6 +9,7 @@ export type MainTabParamList = {
 export type RootStackParamList = {
   Login: undefined;
   Search: undefined;
+  CreateParking: undefined;
   MainTabs: NavigatorScreenParams<MainTabParamList>;
   Reservation: {
     parkingId: number;

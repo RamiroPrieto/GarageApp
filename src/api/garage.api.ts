@@ -1,8 +1,17 @@
 import { apiFetch } from "./api";
-import { Parking } from "../types/garage.types";
+import { CreateParkingDto, Parking } from "../types/garage.types";
 
 export async function getParkings(): Promise<Parking[]> {
   return apiFetch("/parkings");
+}
+
+export async function createParking(
+  parking: CreateParkingDto,
+): Promise<Parking> {
+  return apiFetch("/parkings", {
+    method: "POST",
+    body: JSON.stringify(parking),
+  });
 }
 
 export async function getAvailableParkings(

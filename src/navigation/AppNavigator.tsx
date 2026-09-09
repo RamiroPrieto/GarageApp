@@ -7,6 +7,7 @@ import { ReservationScreen } from "../screens/Reservation";
 import { RootStackParamList } from "./navigation.types";
 import { ReservationResultScreen } from "../screens/ReservationResult/ReservationResultScreen";
 import { BottomTabNavigator } from "./BottomTabNavigator";
+import { CreateParkingScreen } from "../screens/CreateParking";
 
 
 const Stack =
@@ -47,6 +48,10 @@ export function AppNavigator() {
       <Stack.Screen
         name="ReservationResult"
         component={ReservationResultScreen}
+      />
+      <Stack.Screen
+        name="CreateParking"
+        component={CreateParkingScreen}
       />
     </Stack.Navigator>
   );

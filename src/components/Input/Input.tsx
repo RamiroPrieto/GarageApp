@@ -7,6 +7,7 @@ import { colors } from "../../theme/colors";
 export function Input({
   label,
   error,
+  style,
   ...props
 }: InputProps) {
   return (
@@ -19,7 +20,7 @@ export function Input({
 
       <TextInput
         {...props}
-        style={styles.input}
+        style={[styles.input, style]}
         placeholderTextColor={colors.textSecondary}
       />
 

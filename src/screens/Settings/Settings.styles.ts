@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     overflow: "hidden",
   },
+  publishParking: { alignItems: "center", borderBottomColor: colors.border, borderBottomWidth: 1, flexDirection: "row", minHeight: 61, paddingHorizontal: 14 },
   row: { alignItems: "center", flexDirection: "row", minHeight: 61, paddingHorizontal: 14 },
   rowBorder: { borderBottomColor: colors.border, borderBottomWidth: 1 },
   rowText: { flex: 1 },
