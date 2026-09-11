@@ -8,6 +8,11 @@ import { RootStackParamList } from "./navigation.types";
 import { ReservationResultScreen } from "../screens/ReservationResult/ReservationResultScreen";
 import { BottomTabNavigator } from "./BottomTabNavigator";
 import { CreateParkingScreen } from "../screens/CreateParking";
+import { EditParkingScreen } from "../screens/EditParking";
+import { MyParkingsScreen } from "../screens/MyParkings";
+import { CreateVehicleScreen } from "../screens/CreateVehicle";
+import { EditVehicleScreen } from "../screens/EditVehicle";
+import { MyVehiclesScreen } from "../screens/MyVehicles";
 
 
 const Stack =
@@ -53,6 +58,11 @@ export function AppNavigator() {
         name="CreateParking"
         component={CreateParkingScreen}
       />
+      <Stack.Screen name="MyParkings" component={MyParkingsScreen} />
+      <Stack.Screen name="EditParking" component={EditParkingScreen} />
+      <Stack.Screen name="MyVehicles" component={MyVehiclesScreen} />
+      <Stack.Screen name="CreateVehicle" component={CreateVehicleScreen} />
+      <Stack.Screen name="EditVehicle" component={EditVehicleScreen} />
     </Stack.Navigator>
   );
 }

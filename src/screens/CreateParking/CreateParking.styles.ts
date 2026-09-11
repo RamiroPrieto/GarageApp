@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
   multilineInput: { height: 90, textAlignVertical: "top" },
   sectionTitle: { ...typography.semiBold, color: colors.text, fontSize: 15, marginBottom: 5, marginTop: 16 },
   locationHint: { ...typography.regular, color: colors.textSecondary, fontSize: 12, marginBottom: 10 },
+  locationSuccess: { ...typography.medium, color: colors.success, fontSize: 12, marginBottom: 10 },
   rowInputs: { flexDirection: "row", gap: 12 },
   halfInput: { flex: 1 },
   typeOptions: { flexDirection: "row", gap: 8, marginBottom: 4 },

@@ -146,5 +146,37 @@
   },
   "testApi": {
     "button": "Prova connessione"
+  },
+  "management": {
+    "myVehicles": "I miei veicoli",
+    "manageVehicles": "Gestisci i miei veicoli",
+    "manageVehiclesSubtitle": "Gestisci i tuoi veicoli e quello predefinito",
+    "addVehicle": "Aggiungi veicolo",
+    "editVehicle": "Modifica veicolo",
+    "saveVehicle": "Salva veicolo",
+    "saveChanges": "Salva modifiche",
+    "default": "Predefinito",
+    "delete": "Elimina",
+    "vehicleAdded": "Veicolo aggiunto",
+    "vehicleSaved": "Il tuo veicolo è stato salvato.",
+    "vehicleUpdated": "Il tuo veicolo è stato aggiornato.",
+    "changesSaved": "Modifiche salvate",
+    "brand": "Marca",
+    "model": "Modello",
+    "plate": "Targa",
+    "color": "Colore",
+    "plateRequired": "La targa è obbligatoria.",
+    "vehicleSaveError": "Impossibile salvare il veicolo.",
+    "back": "Indietro",
+    "addParking": "Aggiungi parcheggio",
+    "edit": "Modifica",
+    "manageParkings": "Gestisci i miei parcheggi"
+  },
+  "language": {
+    "selectTitle": "Lingua",
+    "selectMessage": "Scegli la lingua dell'app",
+    "es": "Español",
+    "en": "English",
+    "it": "Italiano"
   }
 }

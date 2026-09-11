@@ -20,22 +20,22 @@ function getDeviceLocaleTag(): string {
     const settings = NativeModules.SettingsManager?.settings as
       | { AppleLocale?: string; AppleLanguages?: string[] }
       | undefined;
-    return settings?.AppleLocale ?? settings?.AppleLanguages?.[0] ?? "es";
+    return settings?.AppleLocale ?? settings?.AppleLanguages?.[0] ?? "en";
   }
 
   const localeIdentifier = NativeModules.I18nManager?.localeIdentifier as
     | string
     | undefined;
-  return localeIdentifier ?? "es";
+  return localeIdentifier ?? "en";
 }
 
 export function getDeviceLanguage(): AppLanguage {
   const tag = getDeviceLocaleTag();
-  const code = tag.split(/[-_]/)[0]?.toLowerCase() ?? "es";
+  const code = tag.split(/[-_]/)[0]?.toLowerCase() ?? "en";
 
   if (isAppLanguage(code)) {
     return code;
   }
 
-  return "es";
+  return "en";
 }

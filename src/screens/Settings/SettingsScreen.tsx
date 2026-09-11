@@ -13,6 +13,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { colors } from "../../theme/colors";
 import { styles } from "./Settings.styles";
 import { RootStackParamList } from "../../navigation/navigation.types";
+import { useI18n } from "../../context/I18nContext";
 
 type SettingsRowProps = {
   title: string;
@@ -62,17 +63,18 @@ function SettingsRow({
 
 export function SettingsScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { language, setPreference, t } = useI18n();
   const handleLogout = () => {
     Alert.alert(
-      "Cerrar sesión",
-      "¿Estás seguro de que querés cerrar sesión?",
+      t("settings.logoutTitle"),
+      t("settings.logoutMessage"),
       [
         {
-          text: "Cancelar",
+          text: t("settings.cancel"),
           style: "cancel",
         },
         {
-          text: "Cerrar sesión",
+          text: t("settings.logout"),
           style: "destructive",
           onPress: () => {
             console.log("Logout");
@@ -80,6 +82,15 @@ export function SettingsScreen() {
         },
       ]
     );
+  };
+
+  const selectLanguage = () => {
+    Alert.alert(t("language.selectTitle"), t("language.selectMessage"), [
+      { text: t("language.es"), onPress: () => void setPreference("es") },
+      { text: t("language.en"), onPress: () => void setPreference("en") },
+      { text: t("language.it"), onPress: () => void setPreference("it") },
+      { text: t("settings.cancel"), style: "cancel" },
+    ]);
   };
 
   return (
@@ -91,10 +102,10 @@ export function SettingsScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.eyebrow}>PREFERENZE</Text>
+        <Text style={styles.eyebrow}>{t("settings.eyebrow")}</Text>
 
         <Text style={styles.title}>
-          Configurazione
+          {t("settings.title")}
         </Text>
 
         <View style={styles.profileCard}>
@@ -102,45 +113,48 @@ export function SettingsScreen() {
 
           <View style={styles.profileText}>
             <Text style={styles.profileName}>
-              Il tuo profilo
+              {t("settings.profileName")}
             </Text>
 
             <Text style={styles.profileEmail}>
-              Gestisci le tue informazioni
+              {t("settings.profileSubtitle")}
             </Text>
           </View>
 
           <Text style={styles.edit}>
-            Modifica
+            {t("settings.edit")}
           </Text>
         </View>
 
         <Text style={styles.sectionLabel}>
-          PREFERENZE
+          {t("settings.preferences")}
         </Text>
 
         <View style={styles.group}>
           <SettingsRow
-            title="Notifiche"
-            subtitle="Aggiornamenti sulle tue prenotazioni"
+            title={t("settings.notifications")}
+            subtitle={t("settings.notificationsSubtitle")}
             toggle
             bordered
           />
 
           <SettingsRow
-            title="Metodo di pagamento"
-            subtitle="Carte e metodi salvati"
+            title={t("settings.paymentMethod")}
+            subtitle={t("settings.paymentMethodSubtitle")}
             bordered
           />
 
-          <SettingsRow
-            title="Veicoli"
-            subtitle="Gestisci i tuoi veicoli"
-          />
+          <Pressable style={styles.publishParking} onPress={() => navigation.navigate("MyVehicles")}>
+            <View style={styles.rowText}>
+              <Text style={styles.rowTitle}>{t("management.manageVehicles")}</Text>
+              <Text style={styles.rowSubtitle}>{t("management.manageVehiclesSubtitle")}</Text>
+            </View>
+            <Ionicons name="car-sport-outline" size={21} color={colors.primary} />
+          </Pressable>
         </View>
 
         <Text style={styles.sectionLabel}>
-          IMPOSTAZIONI
+          {t("settings.settings")}
         </Text>
 
         <View style={styles.group}>
@@ -149,35 +163,35 @@ export function SettingsScreen() {
               styles.publishParking,
               pressed && { opacity: 0.7 },
             ]}
-            onPress={() => navigation.navigate("CreateParking")}
+            onPress={() => navigation.navigate("MyParkings")}
           >
             <View style={styles.rowText}>
-              <Text style={styles.rowTitle}>Publicar mi estacionamiento</Text>
-              <Text style={styles.rowSubtitle}>Ofrecé tu lugar para estacionar</Text>
+              <Text style={styles.rowTitle}>{t("management.manageParkings")}</Text>
+              <Text style={styles.rowSubtitle}>{t("settings.vehiclesSubtitle")}</Text>
             </View>
-            <Ionicons name="add-circle-outline" size={21} color={colors.primary} />
+            <Ionicons name="car-outline" size={21} color={colors.primary} />
           </Pressable>
 
           <SettingsRow
-            title="Privacy"
-            subtitle="Dati e autorizzazioni"
+            title={t("settings.privacy")}
+            subtitle={t("settings.privacySubtitle")}
             bordered
           />
 
-          <SettingsRow
-            title="Lingua"
-            value="Italiano"
-            bordered
-          />
+          <Pressable style={styles.publishParking} onPress={selectLanguage}>
+            <View style={styles.rowText}><Text style={styles.rowTitle}>{t("settings.language")}</Text></View>
+            <Text style={styles.rowValue}>{t(`language.${language}`)}</Text>
+            <Ionicons name="chevron-forward" size={17} color={colors.primary} />
+          </Pressable>
 
           <SettingsRow
-            title="Assistenza"
-            subtitle="Hai bisogno di aiuto?"
+            title={t("settings.help")}
+            subtitle={t("settings.helpSubtitle")}
           />
         </View>
 
         <Text style={styles.sectionLabel}>
-          ACCOUNT
+          {t("settings.account")}
         </Text>
 
         <View style={styles.group}>
@@ -195,7 +209,7 @@ export function SettingsScreen() {
             />
 
             <Text style={styles.logoutText}>
-              Esci
+              {t("settings.logout")}
             </Text>
           </Pressable>
         </View>

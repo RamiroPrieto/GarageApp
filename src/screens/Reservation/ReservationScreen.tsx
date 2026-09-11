@@ -3,12 +3,13 @@ import { Alert, Pressable, Text, View } from "react-native";
 import {
   RouteProp,
   useNavigation,
+  useFocusEffect,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { useStripe } from "@stripe/stripe-react-native";
 
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { confirmReservationPayment, createReservation } from "../../api/reservation.api";
 import { getMyVehicles } from "../../api/vehicle.api";
@@ -23,6 +24,7 @@ import { styles } from "./Reservation.Screen";
 
 import { RootStackParamList } from "../../navigation/navigation.types";
 import { Vehicle } from "../../types/vehicle.type";
+import { useI18n } from "../../context/I18nContext";
 
 type ReservationScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -45,6 +47,7 @@ export function ReservationScreen({
   } = route.params;
 
   const navigation = useNavigation<ReservationNavigationProp>();
+  const { dateLocale, t } = useI18n();
 
   const {
     initPaymentSheet,
@@ -56,34 +59,34 @@ export function ReservationScreen({
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [showVehicles, setShowVehicles] = useState(false);
 
-  useEffect(() => {
-    const loadVehicles = async () => {
+  const loadVehicles = useCallback(async () => {
       try {
         const data = await getMyVehicles();
 
         setVehicles(data);
 
         if (data.length > 0) {
-          setSelectedVehicle(data[0]);
+          setSelectedVehicle(data.find((vehicle) => vehicle.isDefault) ?? data[0]);
+        } else {
+          setSelectedVehicle(null);
         }
       } catch (error) {
         console.log("ERROR CARGANDO VEHICULOS:");
         console.log(error);
       }
-    };
-
-    void loadVehicles();
   }, []);
 
+  useFocusEffect(useCallback(() => { void loadVehicles(); }, [loadVehicles]));
+
   const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString("it-IT", {
+    new Date(dateString).toLocaleDateString(dateLocale, {
       day: "2-digit",
       month: "long",
       year: "numeric",
     });
 
   const formatTime = (dateString: string) =>
-    new Date(dateString).toLocaleTimeString("it-IT", {
+    new Date(dateString).toLocaleTimeString(dateLocale, {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -180,16 +183,16 @@ export function ReservationScreen({
     <View style={globalStyles.screen}>
       <View style={styles.container}>
         <Text style={styles.title}>
-          Conferma la tua prenotazione
+          {t("reservation.title")}
         </Text>
 
         <View style={styles.section}>
           <Text style={styles.label}>
-            Parcheggio
+            {t("reservation.parking")}
           </Text>
 
           <Text style={styles.value}>
-            Parking #{parkingId}
+            {t("parking.fallbackName", { id: parkingId })}
           </Text>
         </View>
 
@@ -198,12 +201,12 @@ export function ReservationScreen({
         <View style={styles.section}>
           <View style={styles.vehicleHeader}>
             <Text style={[styles.label, styles.vehicleHeaderLabel]}>
-              Vehículo
+              {t("reservation.vehicle")}
             </Text>
 
             <Pressable
               style={styles.addButton}
-              onPress={() => Alert.alert("Próximamente")}
+              onPress={() => navigation.navigate("CreateVehicle")}
               hitSlop={8}
             >
               <Text style={styles.addButtonText}>+</Text>
@@ -217,7 +220,7 @@ export function ReservationScreen({
             <Text style={styles.value}>
               {selectedVehicle
                 ? `${selectedVehicle.brand} ${selectedVehicle.model}`
-                : "Ningún vehículo"}
+                : t("reservation.noVehicle")}
             </Text>
           </Pressable>
 
@@ -243,13 +246,18 @@ export function ReservationScreen({
               ))}
             </View>
           )}
+          {vehicles.length === 0 && (
+            <Pressable style={styles.addVehicleEmpty} onPress={() => navigation.navigate("CreateVehicle")}>
+              <Text style={styles.addVehicleEmptyText}>{t("management.addVehicle")}</Text>
+            </Pressable>
+          )}
         </View>
 
         <View style={styles.divider} />
 
         <View style={styles.section}>
           <Text style={styles.label}>
-            Data
+            {t("reservation.date")}
           </Text>
 
           <Text style={styles.value}>
@@ -260,7 +268,7 @@ export function ReservationScreen({
         <View style={styles.row}>
           <View style={styles.timeContainer}>
             <Text style={styles.label}>
-              Ingresso
+            {t("reservation.entry")}
             </Text>
 
             <Text style={styles.value}>
@@ -270,7 +278,7 @@ export function ReservationScreen({
 
           <View style={styles.timeContainer}>
             <Text style={styles.label}>
-              Uscita
+            {t("reservation.exit")}
             </Text>
 
             <Text style={styles.value}>
@@ -280,7 +288,7 @@ export function ReservationScreen({
         </View>
 
         <Button
-          title="Conferma e paga"
+          title={t("reservation.confirmAndPay")}
           loading={loading}
           onPress={handleConfirmReservation}
         />

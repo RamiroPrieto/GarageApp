@@ -146,5 +146,37 @@
   },
   "testApi": {
     "button": "Probar conexión"
+  },
+  "management": {
+    "myVehicles": "Mis vehículos",
+    "manageVehicles": "Administrar mis vehículos",
+    "manageVehiclesSubtitle": "Gestioná tus vehículos y el predeterminado",
+    "addVehicle": "Agregar vehículo",
+    "editVehicle": "Editar vehículo",
+    "saveVehicle": "Guardar vehículo",
+    "saveChanges": "Guardar cambios",
+    "default": "Predeterminado",
+    "delete": "Eliminar",
+    "vehicleAdded": "Vehículo agregado",
+    "vehicleSaved": "Tu vehículo fue guardado.",
+    "vehicleUpdated": "Tu vehículo fue actualizado.",
+    "changesSaved": "Cambios guardados",
+    "brand": "Marca",
+    "model": "Modelo",
+    "plate": "Patente",
+    "color": "Color",
+    "plateRequired": "La patente es obligatoria.",
+    "vehicleSaveError": "No se pudo guardar el vehículo.",
+    "back": "Volver",
+    "addParking": "Agregar estacionamiento",
+    "edit": "Editar",
+    "manageParkings": "Administrar mis estacionamientos"
+  },
+  "language": {
+    "selectTitle": "Idioma",
+    "selectMessage": "Elegí el idioma de la aplicación",
+    "es": "Español",
+    "en": "English",
+    "it": "Italiano"
   }
 }

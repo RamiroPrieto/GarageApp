@@ -146,5 +146,37 @@
   },
   "testApi": {
     "button": "Test connection"
+  },
+  "management": {
+    "myVehicles": "My vehicles",
+    "manageVehicles": "Manage my vehicles",
+    "manageVehiclesSubtitle": "Manage your vehicles and default vehicle",
+    "addVehicle": "Add vehicle",
+    "editVehicle": "Edit vehicle",
+    "saveVehicle": "Save vehicle",
+    "saveChanges": "Save changes",
+    "default": "Default",
+    "delete": "Delete",
+    "vehicleAdded": "Vehicle added",
+    "vehicleSaved": "Your vehicle was saved.",
+    "vehicleUpdated": "Your vehicle was updated.",
+    "changesSaved": "Changes saved",
+    "brand": "Make",
+    "model": "Model",
+    "plate": "License plate",
+    "color": "Color",
+    "plateRequired": "License plate is required.",
+    "vehicleSaveError": "Unable to save the vehicle.",
+    "back": "Back",
+    "addParking": "Add parking",
+    "edit": "Edit",
+    "manageParkings": "Manage my parkings"
+  },
+  "language": {
+    "selectTitle": "Language",
+    "selectMessage": "Choose the app language",
+    "es": "Español",
+    "en": "English",
+    "it": "Italiano"
   }
 }

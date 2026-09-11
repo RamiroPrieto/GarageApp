@@ -16,8 +16,10 @@ import { styles } from "./SearchScreen.styles";
 import { getMyVehicles } from "../../api/vehicle.api";
 import { Vehicle } from "../../types/vehicle.type";
 import { RootStackParamList } from "../../navigation/navigation.types";
+import { useI18n } from "../../context/I18nContext";
 
 export function SearchScreen() {
+  const { dateLocale, t } = useI18n();
   const navigation = useNavigation<
     NativeStackNavigationProp<RootStackParamList, "Search">
   >();
@@ -67,7 +69,7 @@ export function SearchScreen() {
     useState(false);
 
   const formatDate = (value: Date) => {
-    return value.toLocaleDateString("it-IT", {
+    return value.toLocaleDateString(dateLocale, {
       day: "2-digit",
       month: "long",
       year: "numeric",
@@ -75,7 +77,7 @@ export function SearchScreen() {
   };
 
   const formatTime = (value: Date) => {
-    return value.toLocaleTimeString("it-IT", {
+    return value.toLocaleTimeString(dateLocale, {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
@@ -113,15 +115,15 @@ export function SearchScreen() {
     <View style={globalStyles.screen}>
       <View style={styles.container}>
         <Text style={styles.title}>
-          Encuentra tu parking
+          {t("search.title")}
         </Text>
 
         <Text style={styles.subtitle}>
-          Seleccioná cuándo necesitás estacionar
+          {t("search.subtitle")}
         </Text>
 
         <Text style={styles.label}>
-          Ubicación
+          {t("search.location")}
         </Text>
 
         <View style={styles.location}>
@@ -131,7 +133,7 @@ export function SearchScreen() {
         </View>
 
         <Text style={styles.label}>
-          Fecha
+          {t("search.date")}
         </Text>
 
         <Pressable
@@ -159,7 +161,7 @@ export function SearchScreen() {
         )}
 
         <Text style={styles.label}>
-          Hora de entrada
+          {t("search.entryTime")}
         </Text>
 
         <Pressable
@@ -189,7 +191,7 @@ export function SearchScreen() {
         )}
 
         <Text style={styles.label}>
-          Hora de salida
+          {t("search.exitTime")}
         </Text>
 
         <Pressable
@@ -219,7 +221,7 @@ export function SearchScreen() {
         )}
 
         <Text style={styles.label}>
-          Vehículo
+          {t("search.vehicle")}
         </Text>
 
         <Pressable
@@ -229,7 +231,7 @@ export function SearchScreen() {
           <Text style={styles.inputText}>
             {selectedVehicle
               ? `${selectedVehicle.brand} ${selectedVehicle.model}`
-              : "Seleccionar vehículo"}
+              : t("search.selectVehicle")}
           </Text>
         </Pressable>
 
@@ -258,7 +260,7 @@ export function SearchScreen() {
 
 
         <Button
-          title="Buscar parking"
+          title={t("search.cta")}
           onPress={handleSearch}
         />
       </View>

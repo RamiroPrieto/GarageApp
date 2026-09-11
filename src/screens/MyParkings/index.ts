@@ -1,0 +1,1 @@
+export { MyParkingsScreen } from "./MyParkingsScreen";

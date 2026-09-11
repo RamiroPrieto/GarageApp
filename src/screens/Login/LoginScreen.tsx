@@ -1,6 +1,6 @@
 import { GoogleSignin, isSuccessResponse } from "@react-native-google-signin/google-signin";
 import { useState } from "react";
-import { SafeAreaView, Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 import { apiFetch } from "../../api/api";
 import { Button } from "../../components/Button";
@@ -87,6 +87,13 @@ export function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets
+      >
       <View style={styles.hero}><Text style={styles.eyebrow}>{t("auth.welcome")}</Text><Text style={styles.brand}>GarageApp</Text></View>
       <View style={styles.form}>
         <SegmentedControl value={mode} onChange={setMode} />
@@ -104,6 +111,8 @@ export function LoginScreen() {
         <View style={styles.divider}><View style={styles.line} /><Text style={styles.dividerText}>{t("auth.orContinueWith")}</Text><View style={styles.line} /></View>
         <View style={styles.socialRow}><SocialButton provider="google" onPress={handleGoogleLogin} /><SocialButton provider="apple" onPress={() => setNotice(t("auth.appleUnavailable"))} /></View>
       </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

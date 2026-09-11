@@ -28,4 +28,6 @@ export const styles = StyleSheet.create({
   vehicleList: { marginTop: 12, borderTopWidth: 1, borderTopColor: colors.border },
   vehicleItem: { paddingTop: 12, paddingBottom: 8 },
   vehiclePlate: { fontSize: 12, color: colors.textSecondary, marginTop: 3, ...typography.regular },
+  addVehicleEmpty: { borderColor: colors.primary, borderRadius: 8, borderWidth: 1, marginTop: 12, padding: 10 },
+  addVehicleEmptyText: { ...typography.medium, color: colors.primary, fontSize: 13, textAlign: "center" },
 });
