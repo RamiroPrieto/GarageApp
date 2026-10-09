@@ -1,7 +1,9 @@
 import {
     createContext,
     useContext,
+    useCallback,
     useEffect,
+    useRef,
     useState,
   } from "react";
   
@@ -20,6 +22,7 @@ import {
     phone: string | null;
     profileImage: string | null;
     emailVerified: boolean;
+    creditBalance: number;
   };
   
   type AuthContextType = {
@@ -28,6 +31,7 @@ import {
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<void>;
     loginWithGoogle: (idToken: string) => Promise<void>;
+    refreshUser: () => Promise<User>;
     logout: () => Promise<void>;
   };
   
@@ -43,16 +47,19 @@ import {
   }) {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const sessionVersion = useRef(0);
   
     useEffect(() => {
       restoreSession();
     }, []);
   
     const restoreSession = async () => {
+      const versionWhenRestoring = sessionVersion.current;
+
       try {
         const token = await loadAuthToken();
-  
-        if (!token) {
+
+        if (!token || versionWhenRestoring !== sessionVersion.current) {
           return;
         }
   
@@ -60,16 +67,22 @@ import {
           "/users/me",
         );
   
-        setUser(currentUser);
+        if (versionWhenRestoring === sessionVersion.current) {
+          setUser(currentUser);
+        }
       } catch (error) {
         console.log(
           "No se pudo restaurar la sesión",
           error,
         );
   
-        await clearAuthToken();
+        if (versionWhenRestoring === sessionVersion.current) {
+          await clearAuthToken();
+        }
       } finally {
-        setIsLoading(false);
+        if (versionWhenRestoring === sessionVersion.current) {
+          setIsLoading(false);
+        }
       }
     };
   
@@ -95,9 +108,18 @@ import {
     };
   
     const logout = async () => {
-      await clearAuthToken();
+      sessionVersion.current += 1;
       setUser(null);
+      await clearAuthToken();
     };
+
+    // Home uses this in a focus effect. Keeping its identity stable prevents a
+    // refreshUser -> setUser -> Provider render -> focus effect loop.
+    const refreshUser = useCallback(async () => {
+      const currentUser: User = await apiFetch('/users/me');
+      setUser(currentUser);
+      return currentUser;
+    }, []);
 
     const loginWithGoogle = async (idToken: string) => {
       const data = await apiFetch("/auth/google", { method: "POST", body: JSON.stringify({ idToken }) });
@@ -113,6 +135,7 @@ import {
           isAuthenticated: !!user,
           login,
           loginWithGoogle,
+          refreshUser,
           logout,
         }}
       >

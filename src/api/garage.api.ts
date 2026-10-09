@@ -6,6 +6,17 @@ export type ParkingCoordinates = {
   longitude: number;
 };
 
+export type PlaceSuggestion = { placeId: string; description: string };
+export type PlaceDetails = ParkingCoordinates & { formattedAddress: string };
+
+export function autocompleteAddresses(input: string): Promise<PlaceSuggestion[]> {
+  return apiFetch('/parkings/places/autocomplete', { method: 'POST', body: JSON.stringify({ input }) });
+}
+
+export function getPlaceDetails(placeId: string): Promise<PlaceDetails> {
+  return apiFetch('/parkings/places/details', { method: 'POST', body: JSON.stringify({ placeId }) });
+}
+
 /**
  * The server owns the Geocoding API credential. Keeping that credential on the
  * server is required because the Android Maps key is restricted to the native

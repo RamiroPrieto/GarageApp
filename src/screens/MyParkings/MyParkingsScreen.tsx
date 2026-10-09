@@ -10,10 +10,13 @@ import { RootStackParamList } from "../../navigation/navigation.types";
 import { colors } from "../../theme/colors";
 import { Parking } from "../../types/garage.types";
 import { styles } from "./MyParkings.styles";
+import { useI18n } from "../../context/I18nContext";
+import { formatCurrency } from "../../utils/currency";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MyParkings">;
 
 export function MyParkingsScreen({ navigation }: Props) {
+  const { t, dateLocale } = useI18n();
   const [parkings, setParkings] = useState<Parking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
@@ -55,7 +58,7 @@ export function MyParkingsScreen({ navigation }: Props) {
         <View style={styles.header}><Pressable onPress={() => navigation.goBack()} style={styles.backButton} accessibilityLabel="Volver"><Ionicons name="arrow-back" size={22} color={colors.text} /></Pressable><View><Text style={styles.title}>Mis estacionamientos</Text><Text style={styles.subtitle}>Gestioná los espacios que publicaste.</Text></View></View>
         {isLoading ? <View style={styles.empty}><ActivityIndicator size="large" color={colors.primary} /></View> : parkings.length === 0 ? <View style={styles.empty}><Ionicons name="car-outline" size={44} color={colors.textSecondary} /><Text style={styles.emptyTitle}>Todavía no publicaste estacionamientos</Text><Text style={styles.emptyText}>Agregá tu primer espacio para empezar a recibir reservas.</Text>{addButton}</View> : <>
           {error && <Text style={styles.error}>{error}</Text>}
-          {parkings.map((parking) => <View key={parking.id} style={styles.card}><Text style={styles.cardTitle}>{parking.title}</Text><Text style={styles.address}>{[parking.address, parking.city, parking.country].filter(Boolean).join(", ")}</Text><Text style={styles.price}>${Number(parking.pricePerHour).toFixed(2)} / hora</Text><View style={styles.actions}><View style={styles.switchRow}><Text style={styles.activeLabel}>{parking.active ? "Activo" : "Inactivo"}</Text><Switch value={parking.active} onValueChange={(value) => void changeActive(parking, value)} disabled={updatingId === parking.id} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.text} /></View><Pressable style={styles.editButton} onPress={() => navigation.navigate("EditParking", { parking })}><Text style={styles.editText}>Editar</Text></Pressable></View></View>)}
+          {parkings.map((parking) => <View key={parking.id} style={styles.card}><Text style={styles.cardTitle}>{parking.title}</Text><Text style={styles.address}>{[parking.address, parking.city, parking.country].filter(Boolean).join(", ")}</Text><Text style={styles.price}>{formatCurrency(parking.pricePerHour, parking.currency, dateLocale)} {t("parking.perHour")}</Text><View style={styles.actions}><View style={styles.switchRow}><Text style={styles.activeLabel}>{parking.active ? "Activo" : "Inactivo"}</Text><Switch value={parking.active} onValueChange={(value) => void changeActive(parking, value)} disabled={updatingId === parking.id} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.text} /></View><Pressable style={styles.editButton} onPress={() => navigation.navigate("EditParking", { parking })}><Text style={styles.editText}>Editar</Text></Pressable></View><Pressable style={styles.reservationsButton} onPress={() => navigation.navigate("OwnerBookings")}><Text style={styles.reservationsText}>{t("management.reservations")}</Text></Pressable></View>)}
           {addButton}
         </>}
         {!isLoading && parkings.length === 0 && error && <Text style={styles.error}>{error}</Text>}

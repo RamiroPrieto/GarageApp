@@ -8,9 +8,10 @@ import { useI18n } from "../../context/I18nContext";
 type Props = {
   reservation: Reservation;
   onPress: () => void;
+  onClose: () => void;
 };
 
-export function UpcomingReservationCard({ reservation, onPress }: Props) {
+export function UpcomingReservationCard({ reservation, onPress, onClose }: Props) {
   const { dateLocale, t } = useI18n();
   const start = new Date(reservation.startDatetime);
   const end = new Date(reservation.endDatetime);
@@ -20,11 +21,12 @@ export function UpcomingReservationCard({ reservation, onPress }: Props) {
     <Pressable style={styles.card} onPress={onPress}>
       <View style={styles.heading}>
         <Text style={styles.eyebrow}>{t("upcomingReservation.eyebrow")}</Text>
-        <Ionicons name="chevron-forward" size={18} style={styles.icon} />
+        <View style={{ flexDirection: "row", gap: 10 }}><Pressable onPress={(event) => { event.stopPropagation(); onClose(); }} accessibilityLabel={t("upcomingReservation.close")}><Ionicons name="close" size={18} style={styles.icon} /></Pressable><Ionicons name="chevron-forward" size={18} style={styles.icon} /></View>
       </View>
       <Text style={styles.title}>{reservation.parking?.title ?? t("parking.fallbackName", { id: reservation.parkingId })}</Text>
       <Text style={styles.date}>{today ? t("upcomingReservation.today") : start.toLocaleDateString(dateLocale, { day: "2-digit", month: "short" })}</Text>
       <Text style={styles.time}>{start.toLocaleTimeString(dateLocale, { hour: "2-digit", minute: "2-digit" })} – {end.toLocaleTimeString(dateLocale, { hour: "2-digit", minute: "2-digit" })}</Text>
+      {reservation.vehicle && <Text style={styles.time}>{t("upcomingReservation.vehicle", { plate: reservation.vehicle.licensePlate })}</Text>}
     </Pressable>
   );
 }

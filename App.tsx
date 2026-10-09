@@ -10,6 +10,7 @@ import {
 import { AppNavigator } from "./src/navigation/AppNavigator";
 import { AuthProvider } from "./src/context/AuthContext";
 import { I18nProvider } from "./src/context/I18nContext";
+import { DialogProvider } from "./src/context/DialogContext";
 
 export default function App() {
 
@@ -31,11 +32,7 @@ export default function App() {
       }
     >
       <I18nProvider>
-        <AuthProvider>
-          <NavigationContainer>
-            <AppNavigator />
-          </NavigationContainer>
-        </AuthProvider>
+        <DialogProvider><AuthProvider><NavigationContainer><AppNavigator /></NavigationContainer></AuthProvider></DialogProvider>
       </I18nProvider>
     </StripeProvider>
   );

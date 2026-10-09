@@ -4,7 +4,7 @@ import { Vehicle } from "../types/vehicle.type";
 
 export type MainTabParamList = {
   Home: undefined;
-  Reservations: undefined;
+  Reservations: { reservationId?: number } | undefined;
   Settings: undefined;
 };
 
@@ -23,13 +23,19 @@ export type RootStackParamList = {
   };
   MainTabs: NavigatorScreenParams<MainTabParamList>;
   Reservation: {
-    parkingId: number;
+    parking: Parking;
     startDatetime: string;
     endDatetime: string;
   };
   Payment: {
     reservationId: number;
   };
+  BuyCredits: undefined;
+  EditProfile: undefined;
+  Support: undefined;
+  Terms: undefined;
+  OwnerBookings: undefined;
+  BookingDetails: { reservationId: number };
   ReservationResult: {
     success: boolean;
   };

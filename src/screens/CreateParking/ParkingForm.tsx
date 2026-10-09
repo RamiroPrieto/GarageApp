@@ -25,6 +25,8 @@ import {
   ParkingType,
 } from "../../types/garage.types";
 import { styles } from "./CreateParking.styles";
+import { Currency } from "../../types/garage.types";
+import { useI18n } from "../../context/I18nContext";
 
 type FormValues = Record<
   | "title"
@@ -86,10 +88,12 @@ export function ParkingForm({
   onSubmit,
   onSuccess,
 }: ParkingFormProps) {
+  const { t } = useI18n();
   const [values, setValues] = useState<FormValues>(() => getInitialValues(initialParking));
   const [errors, setErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
   const [covered, setCovered] = useState(initialParking?.covered ?? false);
   const [parkingType, setParkingType] = useState<ParkingType>(initialParking?.parkingType ?? ParkingType.Garage);
+  const [currency, setCurrency] = useState<Currency>(initialParking?.currency ?? "EUR");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGeocoding, setIsGeocoding] = useState(false);
   const [coordinates, setCoordinates] = useState<ParkingCoordinates | null>(() => getInitialCoordinates(initialParking));
@@ -176,6 +180,7 @@ export function ParkingForm({
       latitude: coordinates.latitude,
       longitude: coordinates.longitude,
       pricePerHour: Number(values.pricePerHour),
+      currency,
       covered,
       parkingType,
     };
@@ -217,7 +222,9 @@ export function ParkingForm({
           {locationError && <Text style={styles.requestError}>{locationError}</Text>}
           <Text style={styles.sectionTitle}>Tipo de estacionamiento *</Text>
           <View style={styles.typeOptions}>{parkingTypes.map((type) => <Pressable key={type} style={[styles.typeOption, parkingType === type && styles.typeOptionSelected]} onPress={() => setParkingType(type)}><Text style={[styles.typeText, parkingType === type && styles.typeTextSelected]}>{type}</Text></Pressable>)}</View>
-          <Input label="Precio por hora *" value={values.pricePerHour} onChangeText={(value) => updateValue("pricePerHour", value)} error={errors.pricePerHour} keyboardType="decimal-pad" placeholder="0" />
+          <Text style={styles.sectionTitle}>{t("management.currency")}</Text>
+          <View style={styles.typeOptions}>{(["EUR", "USD"] as Currency[]).map((value) => <Pressable key={value} style={[styles.typeOption, currency === value && styles.typeOptionSelected]} onPress={() => setCurrency(value)}><Text style={[styles.typeText, currency === value && styles.typeTextSelected]}>{value === "EUR" ? "EUR (€)" : "USD ($)"}</Text></Pressable>)}</View>
+          <Input label={`${t("management.pricePerHour")} *`} value={values.pricePerHour} onChangeText={(value) => updateValue("pricePerHour", value)} error={errors.pricePerHour} keyboardType="decimal-pad" placeholder="0" />
           <Input label="Precio por día" value={values.pricePerDay} onChangeText={(value) => updateValue("pricePerDay", value)} error={errors.pricePerDay} keyboardType="decimal-pad" placeholder="0" />
           <View style={styles.rowInputs}><View style={styles.halfInput}><Input label="Altura máx. (m)" value={values.maxHeight} onChangeText={(value) => updateValue("maxHeight", value)} error={errors.maxHeight} keyboardType="decimal-pad" /></View><View style={styles.halfInput}><Input label="Ancho máx. (m)" value={values.maxWidth} onChangeText={(value) => updateValue("maxWidth", value)} error={errors.maxWidth} keyboardType="decimal-pad" /></View></View>
           <View style={styles.coveredRow}><View><Text style={styles.coveredTitle}>Estacionamiento cubierto</Text><Text style={styles.coveredDescription}>Indica si el vehículo queda bajo techo.</Text></View><Switch value={covered} onValueChange={setCovered} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.text} /></View>

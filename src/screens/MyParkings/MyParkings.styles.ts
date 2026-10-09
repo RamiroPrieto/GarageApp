@@ -19,6 +19,8 @@ export const styles = StyleSheet.create({
   switchRow: { alignItems: "center", flexDirection: "row" },
   editButton: { borderColor: colors.primary, borderRadius: 9, borderWidth: 1, paddingHorizontal: 15, paddingVertical: 8 },
   editText: { ...typography.medium, color: colors.primary, fontSize: 13 },
+  reservationsButton: { alignItems: "center", borderColor: colors.border, borderRadius: 9, borderWidth: 1, marginTop: 12, paddingVertical: 9 },
+  reservationsText: { ...typography.medium, color: colors.text, fontSize: 13 },
   addButton: { alignItems: "center", backgroundColor: colors.primary, borderRadius: 12, marginTop: 12, padding: 15 },
   addText: { ...typography.semiBold, color: colors.text, fontSize: 15 },
   empty: { alignItems: "center", flex: 1, justifyContent: "center", paddingHorizontal: 26 },

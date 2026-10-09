@@ -3,7 +3,8 @@
     "comingSoon": "Prossimamente",
     "requestError": "Errore nella richiesta",
     "unknownError": "Si è verificato un errore",
-    "error": "Errore"
+    "error": "Errore",
+    "ok": "OK"
   },
   "auth": {
     "welcome": "BENVENUTO IN",
@@ -36,7 +37,8 @@
     "settings": "Config."
   },
   "home": {
-    "nearbyParking": "Parkings disponibili"
+    "nearbyParking": "Parkings disponibili",
+    "searchAddress": "Cerca un indirizzo"
   },
   "parking": {
     "perHour": "all'ora",
@@ -66,7 +68,27 @@
     "date": "Data",
     "entry": "Ingresso",
     "exit": "Uscita",
-    "confirmAndPay": "Conferma e paga"
+    "total": "Totale",
+    "priceCalculation": "{{price}} x {{hours}} h",
+    "invalidTime": "L'orario di uscita deve essere successivo a quello di ingresso.",
+    "invalidDateTime": "Seleziona una data e un orario futuri.",
+    "confirmAndPay": "Conferma e paga",
+    "paymentMethod": "Metodo di pagamento",
+    "creditCard": "Carta di credito",
+    "credits": "Crediti",
+    "creditsInfo": "Saldo: {{balance}} crediti · Costo prenotazione: {{cost}} crediti",
+    "eurCreditsRate": "Le prenotazioni in EUR richiedono il tasso EUR/USD per i crediti configurato.",
+    "insufficientCredits": "Non hai crediti sufficienti",
+    "paymentCancelled": "Il pagamento è stato annullato.",
+    "paymentFailed": "Il pagamento non è stato completato. Puoi riprovare.",
+    "paymentConfirming": "Conferma sicura del pagamento in corso...",
+    "creditPaymentConfirmTitle": "Conferma pagamento con crediti",
+    "creditPaymentConfirmAmount": "Pagherai {{credits}} crediti. Sei sicuro?",
+    "creditPaymentConfirmMessage": "Pagherai questa prenotazione con crediti. Sei sicuro?",
+    "creditPaymentCancel": "Annulla",
+    "creditPaymentAccept": "Paga con crediti",
+    "paymentPendingTitle": "Pagamento inviato",
+    "paymentPendingMessage": "Stripe ha accettato il pagamento e la prenotazione sarà confermata a breve."
   },
   "reservationResult": {
     "successTitle": "Prenotazione confermata",
@@ -83,10 +105,19 @@
     "previous": "Precedenti",
     "noUpcoming": "Nessuna prenotazione in programma",
     "noPrevious": "Nessuna prenotazione precedente",
+    "active": "In corso",
+    "noActive": "Nessuna prenotazione in corso",
+    "noHistory": "Nessuna prenotazione nello storico",
     "loadError": "Impossibile caricare le prenotazioni",
+    "start": "Avvia prenotazione",
+    "startError": "Impossibile avviare la prenotazione",
+    "waitingForOwner": "In attesa del proprietario",
+    "customerWaiting": "Il cliente sta aspettando il tuo avvio",
+    "bookingStarted": "Prenotazione avviata",
     "status": {
       "PENDING": "In attesa",
       "CONFIRMED": "Confermata",
+      "ACTIVE": "In corso",
       "CANCELLED": "Annullata",
       "COMPLETED": "Completata",
       "EXPIRED": "Scaduta"
@@ -94,7 +125,24 @@
   },
   "upcomingReservation": {
     "eyebrow": "PROSSIMA PRENOTAZIONE",
-    "today": "Oggi"
+    "today": "Oggi",
+    "close": "Chiudi",
+    "vehicle": "Veicolo: {{plate}}"
+  },
+  "bookingDetails": { "customerEyebrow": "LA MIA PRENOTAZIONE", "ownerEyebrow": "PRENOTAZIONE RICEVUTA", "address": "INDIRIZZO", "schedule": "ORARIO", "total": "TOTALE", "customer": "CLIENTE", "startInfo": "La prenotazione può iniziare nei 10 minuti prima dell'orario previsto. Cliente e proprietario devono confermare per iniziare.", "waiting": "In attesa che l'altra parte avvii la prenotazione." },
+  "ownerReservations": {
+    "eyebrow": "GESTIONE",
+    "title": "Prenotazioni dei miei parcheggi",
+    "pending": "In attesa",
+    "upcoming": "Prossime",
+    "active": "In corso",
+    "history": "Cronologia",
+    "empty": "Non ci sono prenotazioni in questa sezione",
+    "customer": "Cliente",
+    "noVehicle": "Nessun veicolo indicato",
+    "start": "Avvia prenotazione",
+    "loadError": "Impossibile caricare le prenotazioni",
+    "startError": "Impossibile avviare la prenotazione"
   },
   "settings": {
     "eyebrow": "PREFERENZE",
@@ -103,6 +151,7 @@
     "profileSubtitle": "Gestisci le tue informazioni",
     "edit": "Modifica",
     "preferences": "PREFERENZE",
+    "management": "GESTIONE",
     "notifications": "Notifiche",
     "notificationsSubtitle": "Aggiornamenti sulle tue prenotazioni",
     "paymentMethod": "Metodo di pagamento",
@@ -125,6 +174,29 @@
     "languageIt": "Italiano",
     "languageEn": "English"
   },
+  "profile": {
+    "eyebrow": "IL MIO PROFILO",
+    "title": "Modifica profilo",
+    "changePhoto": "Aggiungi o cambia foto",
+    "firstName": "NOME",
+    "lastName": "COGNOME",
+    "phone": "TELEFONO",
+    "email": "EMAIL",
+    "save": "Salva modifiche",
+    "required": "Inserisci nome e cognome.",
+    "photoPermission": "Serve il permesso per accedere alle tue foto."
+  },
+  "support": {
+    "eyebrow": "SUPPORTO",
+    "title": "Come possiamo aiutarti?",
+    "subtitle": "Descrivi la richiesta e ti risponderemo via email.",
+    "subject": "OGGETTO",
+    "message": "MESSAGGIO",
+    "send": "Invia richiesta",
+    "required": "Inserisci l'oggetto e almeno 10 caratteri.",
+    "successTitle": "Richiesta inviata",
+    "successMessage": "Abbiamo ricevuto il messaggio e risponderemo presto."
+  },
   "payment": {
     "secure": "PAGAMENTO SICURO",
     "title": "Completa la tua prenotazione",
@@ -144,10 +216,31 @@
     "successTitle": "Pagamento effettuato",
     "successMessage": "Il pagamento è stato elaborato correttamente."
   },
+  "credits": {
+    "title": "Acquista crediti",
+    "rate": "100 crediti = $1 USD",
+    "currentBalance": "Saldo attuale: {{balance}} crediti",
+    "cost": "Costo",
+    "buy": "Paga e acquista crediti",
+    "invalidAmount": "Inserisci un numero intero di crediti maggiore di zero.",
+    "paymentSubmittedTitle": "Pagamento inviato",
+    "paymentSubmittedMessage": "Il saldo verrà aggiornato quando Stripe confermerà il pagamento.",
+    "processingTitle": "Pagamento in elaborazione",
+    "processingMessage": "In attesa che Stripe confermi l'acquisto in modo sicuro.",
+    "pendingTitle": "La conferma sta richiedendo più tempo del previsto",
+    "pendingMessage": "Il pagamento non è ancora stato accreditato. Puoi controllare di nuovo a breve; non effettuare un secondo acquisto.",
+    "checkStatus": "Controlla stato",
+    "backHome": "Torna alla home",
+    "purchaseSuccessTitle": "Crediti accreditati",
+    "purchaseSuccessMessage": "L'acquisto è stato confermato e il saldo è stato aggiornato.",
+    "paymentFailed": "Il pagamento non è stato completato. Puoi riprovare."
+  },
   "testApi": {
     "button": "Prova connessione"
   },
   "management": {
+    "manageBookings": "Gestisci le mie prenotazioni",
+    "manageBookingsSubtitle": "Prenotazioni ricevute nei tuoi parcheggi",
     "myVehicles": "I miei veicoli",
     "manageVehicles": "Gestisci i miei veicoli",
     "manageVehiclesSubtitle": "Gestisci i tuoi veicoli e quello predefinito",
@@ -170,7 +263,10 @@
     "back": "Indietro",
     "addParking": "Aggiungi parcheggio",
     "edit": "Modifica",
-    "manageParkings": "Gestisci i miei parcheggi"
+    "manageParkings": "Gestisci i miei parcheggi",
+    "reservations": "Prenotazioni",
+    "currency": "Valuta",
+    "pricePerHour": "Prezzo orario"
   },
   "language": {
     "selectTitle": "Lingua",

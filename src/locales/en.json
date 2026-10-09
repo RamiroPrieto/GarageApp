@@ -3,7 +3,8 @@
     "comingSoon": "Coming soon",
     "requestError": "Request error",
     "unknownError": "Something went wrong",
-    "error": "Error"
+    "error": "Error",
+    "ok": "OK"
   },
   "auth": {
     "welcome": "WELCOME TO",
@@ -36,7 +37,8 @@
     "settings": "Settings"
   },
   "home": {
-    "nearbyParking": "Available parking"
+    "nearbyParking": "Available parking",
+    "searchAddress": "Search an address"
   },
   "parking": {
     "perHour": "per hour",
@@ -66,7 +68,27 @@
     "date": "Date",
     "entry": "Entry",
     "exit": "Exit",
-    "confirmAndPay": "Confirm and pay"
+    "total": "Total",
+    "priceCalculation": "{{price}} x {{hours}} h",
+    "invalidTime": "The exit time must be after the entry time.",
+    "invalidDateTime": "Choose a future date and time.",
+    "confirmAndPay": "Confirm and pay",
+    "paymentMethod": "Payment method",
+    "creditCard": "Credit card",
+    "credits": "Credits",
+    "creditsInfo": "Balance: {{balance}} credits · Booking cost: {{cost}} credits",
+    "eurCreditsRate": "EUR bookings require the configured EUR/USD credit rate.",
+    "insufficientCredits": "You don't have enough credits",
+    "paymentCancelled": "Payment was cancelled.",
+    "paymentFailed": "Payment could not be completed. Please try again.",
+    "paymentConfirming": "Confirming your payment securely...",
+    "creditPaymentConfirmTitle": "Confirm credit payment",
+    "creditPaymentConfirmAmount": "You will pay {{credits}} credits. Are you sure?",
+    "creditPaymentConfirmMessage": "You will pay for this booking with credits. Are you sure?",
+    "creditPaymentCancel": "Cancel",
+    "creditPaymentAccept": "Pay with credits",
+    "paymentPendingTitle": "Payment submitted",
+    "paymentPendingMessage": "Stripe accepted your payment and the booking will be confirmed shortly."
   },
   "reservationResult": {
     "successTitle": "Booking confirmed",
@@ -83,10 +105,19 @@
     "previous": "Previous",
     "noUpcoming": "No upcoming bookings",
     "noPrevious": "No previous bookings",
+    "active": "In progress",
+    "noActive": "No bookings in progress",
+    "noHistory": "No bookings in history",
     "loadError": "Unable to load bookings",
+    "start": "Start booking",
+    "startError": "Unable to start the booking",
+    "waitingForOwner": "Waiting for owner",
+    "customerWaiting": "The customer is waiting for you to start",
+    "bookingStarted": "Booking started",
     "status": {
       "PENDING": "Pending",
       "CONFIRMED": "Confirmed",
+      "ACTIVE": "Active",
       "CANCELLED": "Cancelled",
       "COMPLETED": "Completed",
       "EXPIRED": "Expired"
@@ -94,7 +125,24 @@
   },
   "upcomingReservation": {
     "eyebrow": "UPCOMING BOOKING",
-    "today": "Today"
+    "today": "Today",
+    "close": "Close",
+    "vehicle": "Vehicle: {{plate}}"
+  },
+  "bookingDetails": { "customerEyebrow": "MY BOOKING", "ownerEyebrow": "RECEIVED BOOKING", "address": "ADDRESS", "schedule": "SCHEDULE", "total": "TOTAL", "customer": "CUSTOMER", "startInfo": "The booking can be started within the 10 minutes before its scheduled time. Both customer and owner must confirm to begin.", "waiting": "Waiting for the other party to start the booking." },
+  "ownerReservations": {
+    "eyebrow": "MANAGE",
+    "title": "My parking bookings",
+    "pending": "Pending",
+    "upcoming": "Upcoming",
+    "active": "Active",
+    "history": "History",
+    "empty": "There are no bookings in this section",
+    "customer": "Customer",
+    "noVehicle": "No vehicle provided",
+    "start": "Start booking",
+    "loadError": "Unable to load bookings",
+    "startError": "Unable to start the booking"
   },
   "settings": {
     "eyebrow": "PREFERENCES",
@@ -103,6 +151,7 @@
     "profileSubtitle": "Manage your information",
     "edit": "Edit",
     "preferences": "PREFERENCES",
+    "management": "MANAGE",
     "notifications": "Notifications",
     "notificationsSubtitle": "Updates about your bookings",
     "paymentMethod": "Payment method",
@@ -125,6 +174,29 @@
     "languageIt": "Italiano",
     "languageEn": "English"
   },
+  "profile": {
+    "eyebrow": "MY PROFILE",
+    "title": "Edit profile",
+    "changePhoto": "Add or change photo",
+    "firstName": "FIRST NAME",
+    "lastName": "LAST NAME",
+    "phone": "PHONE",
+    "email": "EMAIL",
+    "save": "Save changes",
+    "required": "Enter your first and last name.",
+    "photoPermission": "We need permission to access your photos."
+  },
+  "support": {
+    "eyebrow": "SUPPORT",
+    "title": "How can we help?",
+    "subtitle": "Tell us about your question and we will reply by email.",
+    "subject": "SUBJECT",
+    "message": "MESSAGE",
+    "send": "Send request",
+    "required": "Enter a subject and at least 10 characters.",
+    "successTitle": "Request sent",
+    "successMessage": "We received your message and will reply soon."
+  },
   "payment": {
     "secure": "SECURE PAYMENT",
     "title": "Complete your booking",
@@ -144,10 +216,31 @@
     "successTitle": "Payment completed",
     "successMessage": "The payment was processed successfully."
   },
+  "credits": {
+    "title": "Buy credits",
+    "rate": "100 credits = $1 USD",
+    "currentBalance": "Current balance: {{balance}} credits",
+    "cost": "Cost",
+    "buy": "Pay and buy credits",
+    "invalidAmount": "Enter a whole number of credits greater than zero.",
+    "paymentSubmittedTitle": "Payment submitted",
+    "paymentSubmittedMessage": "Your balance will update after Stripe confirms the payment.",
+    "processingTitle": "Payment processing",
+    "processingMessage": "Waiting for Stripe to confirm your purchase securely.",
+    "pendingTitle": "Confirmation is taking longer than expected",
+    "pendingMessage": "Your payment has not been credited yet. You can check again shortly; do not make a second purchase.",
+    "checkStatus": "Check status",
+    "backHome": "Back to home",
+    "purchaseSuccessTitle": "Credits added",
+    "purchaseSuccessMessage": "Your purchase was confirmed and your balance has been updated.",
+    "paymentFailed": "The payment was not completed. You can try again."
+  },
   "testApi": {
     "button": "Test connection"
   },
   "management": {
+    "manageBookings": "Manage my bookings",
+    "manageBookingsSubtitle": "Bookings received at your parkings",
     "myVehicles": "My vehicles",
     "manageVehicles": "Manage my vehicles",
     "manageVehiclesSubtitle": "Manage your vehicles and default vehicle",
@@ -170,7 +263,10 @@
     "back": "Back",
     "addParking": "Add parking",
     "edit": "Edit",
-    "manageParkings": "Manage my parkings"
+    "manageParkings": "Manage my parkings",
+    "reservations": "Bookings",
+    "currency": "Currency",
+    "pricePerHour": "Price per hour"
   },
   "language": {
     "selectTitle": "Language",

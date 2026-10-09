@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import {
-  Alert,
+  Image,
   Pressable,
   ScrollView,
   Text,
@@ -14,6 +14,8 @@ import { colors } from "../../theme/colors";
 import { styles } from "./Settings.styles";
 import { RootStackParamList } from "../../navigation/navigation.types";
 import { useI18n } from "../../context/I18nContext";
+import { useAuth } from "../../context/AuthContext";
+import { useDialog } from "../../context/DialogContext";
 
 type SettingsRowProps = {
   title: string;
@@ -64,28 +66,25 @@ function SettingsRow({
 export function SettingsScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { language, setPreference, t } = useI18n();
+  const { logout, user } = useAuth();
+  const { show } = useDialog();
   const handleLogout = () => {
-    Alert.alert(
+    show(
       t("settings.logoutTitle"),
       t("settings.logoutMessage"),
       [
-        {
-          text: t("settings.cancel"),
-          style: "cancel",
-        },
+        { text: t("settings.cancel"), style: "cancel" },
         {
           text: t("settings.logout"),
           style: "destructive",
-          onPress: () => {
-            console.log("Logout");
-          },
+          onPress: () => void logout(),
         },
       ]
     );
   };
 
   const selectLanguage = () => {
-    Alert.alert(t("language.selectTitle"), t("language.selectMessage"), [
+    show(t("language.selectTitle"), t("language.selectMessage"), [
       { text: t("language.es"), onPress: () => void setPreference("es") },
       { text: t("language.en"), onPress: () => void setPreference("en") },
       { text: t("language.it"), onPress: () => void setPreference("it") },
@@ -108,23 +107,23 @@ export function SettingsScreen() {
           {t("settings.title")}
         </Text>
 
-        <View style={styles.profileCard}>
-          <Text style={styles.avatar}>U</Text>
+        <Pressable style={styles.profileCard} onPress={() => navigation.navigate('EditProfile')}>
+          {user?.profileImage ? <Image source={{ uri: user.profileImage }} style={styles.avatarImage} /> : <Text style={styles.avatar}>{`${user?.firstName?.[0] ?? ''}${user?.lastName?.[0] ?? ''}`.toUpperCase() || 'U'}</Text>}
 
           <View style={styles.profileText}>
             <Text style={styles.profileName}>
-              {t("settings.profileName")}
+              {user ? `${user.firstName} ${user.lastName}` : t("settings.profileName")}
             </Text>
 
             <Text style={styles.profileEmail}>
-              {t("settings.profileSubtitle")}
+              {user?.email ?? t("settings.profileSubtitle")}
             </Text>
           </View>
 
           <Text style={styles.edit}>
             {t("settings.edit")}
           </Text>
-        </View>
+        </Pressable>
 
         <Text style={styles.sectionLabel}>
           {t("settings.preferences")}
@@ -144,17 +143,10 @@ export function SettingsScreen() {
             bordered
           />
 
-          <Pressable style={styles.publishParking} onPress={() => navigation.navigate("MyVehicles")}>
-            <View style={styles.rowText}>
-              <Text style={styles.rowTitle}>{t("management.manageVehicles")}</Text>
-              <Text style={styles.rowSubtitle}>{t("management.manageVehiclesSubtitle")}</Text>
-            </View>
-            <Ionicons name="car-sport-outline" size={21} color={colors.primary} />
-          </Pressable>
         </View>
 
         <Text style={styles.sectionLabel}>
-          {t("settings.settings")}
+          {t("settings.management")}
         </Text>
 
         <View style={styles.group}>
@@ -172,11 +164,30 @@ export function SettingsScreen() {
             <Ionicons name="car-outline" size={21} color={colors.primary} />
           </Pressable>
 
-          <SettingsRow
-            title={t("settings.privacy")}
-            subtitle={t("settings.privacySubtitle")}
-            bordered
-          />
+          <Pressable style={styles.publishParking} onPress={() => navigation.navigate("OwnerBookings")}>
+            <View style={styles.rowText}>
+              <Text style={styles.rowTitle}>{t("management.manageBookings")}</Text>
+              <Text style={styles.rowSubtitle}>{t("management.manageBookingsSubtitle")}</Text>
+            </View>
+            <Ionicons name="calendar-outline" size={21} color={colors.primary} />
+          </Pressable>
+
+          <Pressable style={styles.publishParking} onPress={() => navigation.navigate("MyVehicles")}>
+            <View style={styles.rowText}>
+              <Text style={styles.rowTitle}>{t("management.manageVehicles")}</Text>
+              <Text style={styles.rowSubtitle}>{t("management.manageVehiclesSubtitle")}</Text>
+            </View>
+            <Ionicons name="car-sport-outline" size={21} color={colors.primary} />
+          </Pressable>
+        </View>
+
+        <Text style={styles.sectionLabel}>
+          {t("settings.settings")}
+        </Text>
+
+        <View style={styles.group}>
+
+          <Pressable style={styles.publishParking} onPress={() => navigation.navigate('Terms')}><View style={styles.rowText}><Text style={styles.rowTitle}>{t("settings.privacy")}</Text><Text style={styles.rowSubtitle}>{t("settings.privacySubtitle")}</Text></View><Ionicons name="chevron-forward" size={17} color={colors.primary} /></Pressable>
 
           <Pressable style={styles.publishParking} onPress={selectLanguage}>
             <View style={styles.rowText}><Text style={styles.rowTitle}>{t("settings.language")}</Text></View>
@@ -184,10 +195,7 @@ export function SettingsScreen() {
             <Ionicons name="chevron-forward" size={17} color={colors.primary} />
           </Pressable>
 
-          <SettingsRow
-            title={t("settings.help")}
-            subtitle={t("settings.helpSubtitle")}
-          />
+          <Pressable style={styles.publishParking} onPress={() => navigation.navigate('Support')}><View style={styles.rowText}><Text style={styles.rowTitle}>{t("settings.help")}</Text><Text style={styles.rowSubtitle}>{t("settings.helpSubtitle")}</Text></View><Ionicons name="chevron-forward" size={17} color={colors.primary} /></Pressable>
         </View>
 
         <Text style={styles.sectionLabel}>

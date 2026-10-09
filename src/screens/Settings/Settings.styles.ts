@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
     textAlignVertical: "center",
     width: 44,
   },
+  avatarImage: { height: 44, width: 44, borderRadius: 22 },
   profileText: { flex: 1, marginLeft: 12 },
   profileName: { ...typography.semiBold, color: colors.text, fontSize: 14 },
   profileEmail: { ...typography.regular, color: colors.textSecondary, fontSize: 12, marginTop: 3 },

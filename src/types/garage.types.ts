@@ -2,6 +2,8 @@ export enum ParkingType {
   Garage = "GARAGE",
 }
 
+export type Currency = "EUR" | "USD";
+
 export type CreateParkingDto = {
   title: string;
   description?: string;
@@ -12,6 +14,7 @@ export type CreateParkingDto = {
   longitude: number;
   pricePerHour: number;
   pricePerDay?: number;
+  currency?: Currency;
   maxHeight?: number;
   maxWidth?: number;
   covered?: boolean;
@@ -30,6 +33,7 @@ export interface Parking {
   longitude: string;
   pricePerHour: string;
   pricePerDay: string;
+  currency: Currency;
   maxHeight: string;
   maxWidth: string;
   covered: boolean;

@@ -42,6 +42,12 @@
       ],
       "expo-secure-store",
       "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir a GarageApp acceder a tus fotos para actualizar tu perfil."
+        }
+      ],
       "@react-native-community/datetimepicker",
       "@react-native-google-signin/google-signin"
     ],
