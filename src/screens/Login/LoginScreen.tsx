@@ -1,5 +1,6 @@
 import { GoogleSignin, isSuccessResponse } from "@react-native-google-signin/google-signin";
-import { useState } from "react";
+import * as AppleAuthentication from "expo-apple-authentication";
+import { useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 import { apiFetch } from "../../api/api";
@@ -28,7 +29,14 @@ export function LoginScreen() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login, loginWithGoogle } = useAuth();
+  const [appleAvailable, setAppleAvailable] = useState(false);
+  const [phoneVerificationEmail, setPhoneVerificationEmail] = useState<string | null>(null);
+  const [phoneVerificationCode, setPhoneVerificationCode] = useState("");
+  const { login, loginWithGoogle, loginWithApple } = useAuth();
+
+  useEffect(() => {
+    void AppleAuthentication.isAvailableAsync().then(setAppleAvailable).catch(() => setAppleAvailable(false));
+  }, []);
 
   const validate = () => {
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) return t("auth.invalidEmail");
@@ -57,9 +65,43 @@ export function LoginScreen() {
         method: "POST",
         body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), password, phone: phone.trim() }),
       });
-      setMode("login");
       setPassword("");
+      setPhoneVerificationEmail(email.trim());
+      setNotice(t("auth.phoneCodeSent"));
+    } catch (caughtError) {
+      setError(caughtError instanceof Error ? caughtError.message : t("auth.genericError"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const confirmPhoneVerification = async () => {
+    if (!phoneVerificationEmail || !/^\d{4,10}$/.test(phoneVerificationCode)) {
+      setError(t("auth.invalidPhoneCode"));
+      return;
+    }
+    try {
+      setError("");
+      setLoading(true);
+      await apiFetch('/auth/phone-verification/confirm', { method: 'POST', body: JSON.stringify({ email: phoneVerificationEmail, code: phoneVerificationCode }) });
+      setPhoneVerificationEmail(null);
+      setPhoneVerificationCode("");
+      setMode("login");
       setNotice(t("auth.registerCheckEmail"));
+    } catch (caughtError) {
+      setError(caughtError instanceof Error ? caughtError.message : t("auth.genericError"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resendPhoneVerification = async () => {
+    if (!phoneVerificationEmail || loading) return;
+    try {
+      setError("");
+      setLoading(true);
+      await apiFetch('/auth/phone-verification/request', { method: 'POST', body: JSON.stringify({ email: phoneVerificationEmail }) });
+      setNotice(t("auth.phoneCodeResent"));
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : t("auth.genericError"));
     } finally {
@@ -85,6 +127,32 @@ export function LoginScreen() {
     }
   };
 
+  const handleAppleLogin = async () => {
+    if (loading) return;
+    try {
+      setError("");
+      setNotice("");
+      setLoading(true);
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+      if (!credential.identityToken) throw new Error(t("auth.appleInvalidCredential"));
+      await loginWithApple({
+        idToken: credential.identityToken,
+        firstName: credential.fullName?.givenName ?? undefined,
+        lastName: credential.fullName?.familyName ?? undefined,
+      });
+    } catch (caughtError) {
+      if ((caughtError as { code?: string }).code === "ERR_REQUEST_CANCELED") return;
+      setError(caughtError instanceof Error ? caughtError.message : t("auth.appleError"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
@@ -96,6 +164,14 @@ export function LoginScreen() {
       >
       <View style={styles.hero}><Text style={styles.eyebrow}>{t("auth.welcome")}</Text><Text style={styles.brand}>GarageApp</Text></View>
       <View style={styles.form}>
+        {phoneVerificationEmail ? <>
+          <Text style={styles.notice}>{t("auth.phoneCodeInstructions", { email: phoneVerificationEmail })}</Text>
+          <Input label={t("auth.phoneCode")} value={phoneVerificationCode} onChangeText={setPhoneVerificationCode} keyboardType="number-pad" maxLength={10} />
+          {error !== "" && <Text style={styles.error}>{error}</Text>}
+          {notice !== "" && <Text style={styles.notice}>{notice}</Text>}
+          <Button title={t("auth.confirmPhone")} loading={loading} onPress={confirmPhoneVerification} />
+          <Text style={styles.forgotPassword} onPress={() => void resendPhoneVerification()}>{t("auth.resendPhoneCode")}</Text>
+        </> : <>
         <SegmentedControl value={mode} onChange={setMode} />
         {mode === "register" && <>
           <Input label={t("auth.firstName")} placeholder={t("auth.firstNamePlaceholder")} autoCapitalize="words" value={firstName} onChangeText={setFirstName} />
@@ -109,7 +185,17 @@ export function LoginScreen() {
         {notice !== "" && <Text style={styles.notice}>{notice}</Text>}
         <Button title={mode === "login" ? t("auth.login") : t("auth.register")} loading={loading} onPress={handleSubmit} />
         <View style={styles.divider}><View style={styles.line} /><Text style={styles.dividerText}>{t("auth.orContinueWith")}</Text><View style={styles.line} /></View>
-        <View style={styles.socialRow}><SocialButton provider="google" onPress={handleGoogleLogin} /><SocialButton provider="apple" onPress={() => setNotice(t("auth.appleUnavailable"))} /></View>
+        <View style={styles.socialRow}>
+          <SocialButton provider="google" label={mode === "register" ? t("auth.signUpWithGoogle") : t("auth.continueWithGoogle")} onPress={handleGoogleLogin} disabled={loading} />
+          {appleAvailable && <AppleAuthentication.AppleAuthenticationButton
+            buttonType={mode === "register" ? AppleAuthentication.AppleAuthenticationButtonType.SIGN_UP : AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE_OUTLINE}
+            cornerRadius={12}
+            style={styles.appleButton}
+            onPress={handleAppleLogin}
+          />}
+        </View>
+        </>}
       </View>
       </ScrollView>
       </KeyboardAvoidingView>

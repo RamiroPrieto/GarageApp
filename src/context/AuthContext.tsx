@@ -20,6 +20,7 @@ import {
     lastName: string;
     email: string;
     phone: string | null;
+    phoneVerified: boolean;
     profileImage: string | null;
     emailVerified: boolean;
     creditBalance: number;
@@ -31,6 +32,7 @@ import {
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<void>;
     loginWithGoogle: (idToken: string) => Promise<void>;
+    loginWithApple: (credentials: { idToken: string; firstName?: string; lastName?: string }) => Promise<void>;
     refreshUser: () => Promise<User>;
     logout: () => Promise<void>;
   };
@@ -126,6 +128,12 @@ import {
       await setAuthToken(data.accessToken);
       setUser(await apiFetch("/users/me"));
     };
+
+    const loginWithApple = async (credentials: { idToken: string; firstName?: string; lastName?: string }) => {
+      const data = await apiFetch("/auth/apple", { method: "POST", body: JSON.stringify(credentials) });
+      await setAuthToken(data.accessToken);
+      setUser(await apiFetch("/users/me"));
+    };
   
     return (
       <AuthContext.Provider
@@ -135,6 +143,7 @@ import {
           isAuthenticated: !!user,
           login,
           loginWithGoogle,
+          loginWithApple,
           refreshUser,
           logout,
         }}

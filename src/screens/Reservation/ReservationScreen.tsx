@@ -116,6 +116,7 @@ export function ReservationScreen({ route }: { route: ReservationScreenRouteProp
 
   const processReservationPayment = async () => {
     if (selectedEnd <= selectedStart) { showValidation(t("reservation.invalidTime")); return; }
+    if (durationHours < 1) { showValidation(t("reservation.minimumDuration")); return; }
     if (selectedStart < new Date()) { showValidation(t("reservation.invalidDateTime")); return; }
     let reservationId: number | null = null;
     let paymentCompletedInSheet = false;
@@ -172,6 +173,7 @@ export function ReservationScreen({ route }: { route: ReservationScreenRouteProp
 
   const handleConfirmReservation = () => {
     if (selectedEnd <= selectedStart) { showValidation(t("reservation.invalidTime")); return; }
+    if (durationHours < 1) { showValidation(t("reservation.minimumDuration")); return; }
     if (selectedStart < new Date()) { showValidation(t("reservation.invalidDateTime")); return; }
     if (paymentMethod !== "credits") {
       void processReservationPayment();

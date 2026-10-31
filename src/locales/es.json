@@ -21,15 +21,26 @@
     "passwordPlaceholder": "Al menos 8 caracteres",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "orContinueWith": "o continuar con",
+    "continueWithGoogle": "Google",
+    "signUpWithGoogle": "Registrarme con Google",
     "invalidEmail": "Ingresá un email válido",
     "passwordMin": "La contraseña debe tener al menos 8 caracteres",
     "completeFields": "Completá todos los campos",
     "invalidPhone": "Ingresá un teléfono válido",
     "registerCheckEmail": "Revisá tu email para confirmar la cuenta antes de iniciar sesión.",
+    "phoneCodeSent": "Te enviamos un código de verificación por SMS.",
+    "phoneCodeResent": "Te enviamos un nuevo código por SMS.",
+    "phoneCodeInstructions": "Ingresá el código enviado por SMS al número de esta cuenta.",
+    "phoneCode": "CÓDIGO SMS",
+    "confirmPhone": "Confirmar número",
+    "resendPhoneCode": "Reenviar código",
+    "invalidPhoneCode": "Ingresá el código que recibiste por SMS.",
     "genericError": "Ocurrió un error",
     "googleError": "No se pudo iniciar sesión con Google",
     "googleInvalidCredential": "Google no devolvió una credencial válida",
-    "appleUnavailable": "Apple Sign-In todavía no está disponible"
+    "appleUnavailable": "Apple Sign-In todavía no está disponible",
+    "appleInvalidCredential": "Apple no devolvió una credencial válida",
+    "appleError": "No se pudo iniciar sesión con Apple"
   },
   "tabs": {
     "home": "Home",
@@ -37,6 +48,8 @@
     "settings": "Config."
   },
   "home": {
+    "noAddressResults": "No encontramos direcciones para esa búsqueda.",
+    "searchUnavailable": "No pudimos buscar direcciones. Intentá nuevamente.",
     "nearbyParking": "Parkings disponibles",
     "searchAddress": "Buscar una dirección"
   },
@@ -71,6 +84,7 @@
     "total": "Total",
     "priceCalculation": "{{price}} x {{hours}} h",
     "invalidTime": "La hora de salida debe ser posterior a la hora de entrada.",
+    "minimumDuration": "La reserva debe tener una duración mínima de una hora.",
     "invalidDateTime": "Seleccioná una fecha y hora futuras.",
     "confirmAndPay": "Confirmar y pagar",
     "paymentMethod": "Método de pago",
@@ -182,8 +196,12 @@
     "lastName": "APELLIDO",
     "phone": "TELÉFONO",
     "email": "EMAIL",
-    "save": "Guardar cambios",
-    "required": "Completá tu nombre y apellido.",
+      "save": "Guardar cambios",
+      "phoneVerificationHint": "Enviamos un código por SMS a {{phone}}. Ingresalo para confirmar el nuevo número.",
+      "verificationCode": "CÓDIGO DE VERIFICACIÓN",
+      "confirmPhone": "Confirmar número",
+      "invalidVerificationCode": "Ingresá el código que recibiste por SMS.",
+      "required": "Completá tu nombre y apellido.",
     "photoPermission": "Necesitamos permiso para acceder a tus fotos."
   },
   "support": {

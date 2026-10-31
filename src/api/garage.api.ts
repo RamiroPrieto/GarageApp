@@ -8,13 +8,29 @@ export type ParkingCoordinates = {
 
 export type PlaceSuggestion = { placeId: string; description: string };
 export type PlaceDetails = ParkingCoordinates & { formattedAddress: string };
+export type ReverseGeocodedLocation = { city: string; country: string };
 
-export function autocompleteAddresses(input: string): Promise<PlaceSuggestion[]> {
-  return apiFetch('/parkings/places/autocomplete', { method: 'POST', body: JSON.stringify({ input }) });
+export function autocompleteAddresses(
+  input: string,
+  options?: Partial<ParkingCoordinates> & { languageCode?: string },
+): Promise<PlaceSuggestion[]> {
+  return apiFetch('/parkings/places/autocomplete', {
+    method: 'POST',
+    body: JSON.stringify({ input, ...options }),
+  });
 }
 
 export function getPlaceDetails(placeId: string): Promise<PlaceDetails> {
   return apiFetch('/parkings/places/details', { method: 'POST', body: JSON.stringify({ placeId }) });
+}
+
+export function reverseGeocodeLocation(
+  coordinates: ParkingCoordinates,
+): Promise<ReverseGeocodedLocation> {
+  return apiFetch('/parkings/reverse-geocode', {
+    method: 'POST',
+    body: JSON.stringify(coordinates),
+  });
 }
 
 /**

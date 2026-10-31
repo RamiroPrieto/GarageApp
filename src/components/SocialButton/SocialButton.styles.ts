@@ -18,6 +18,10 @@ export const styles = StyleSheet.create({
     gap: 10,
   },
 
+  buttonDisabled: {
+    opacity: 0.55,
+  },
+
   text: {
     color: colors.text,
     fontSize: 13,

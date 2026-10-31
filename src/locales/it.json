@@ -21,15 +21,26 @@
     "passwordPlaceholder": "Almeno 8 caratteri",
     "forgotPassword": "Password dimenticata?",
     "orContinueWith": "oppure continua con",
+    "continueWithGoogle": "Google",
+    "signUpWithGoogle": "Registrati con Google",
     "invalidEmail": "Inserisci un'email valida",
     "passwordMin": "La password deve avere almeno 8 caratteri",
     "completeFields": "Completa tutti i campi",
     "invalidPhone": "Inserisci un telefono valido",
     "registerCheckEmail": "Controlla la tua email per confermare l’account prima di accedere.",
+    "phoneCodeSent": "Ti abbiamo inviato un codice di verifica via SMS.",
+    "phoneCodeResent": "Ti abbiamo inviato un nuovo codice via SMS.",
+    "phoneCodeInstructions": "Inserisci il codice SMS inviato al numero di telefono di questo account.",
+    "phoneCode": "CODICE SMS",
+    "confirmPhone": "Conferma numero",
+    "resendPhoneCode": "Invia di nuovo il codice",
+    "invalidPhoneCode": "Inserisci il codice ricevuto via SMS.",
     "genericError": "Si è verificato un errore",
     "googleError": "Impossibile accedere con Google",
     "googleInvalidCredential": "Google non ha restituito una credenziale valida",
-    "appleUnavailable": "Apple Sign-In non è ancora disponibile"
+    "appleUnavailable": "Apple Sign-In non è ancora disponibile",
+    "appleInvalidCredential": "Apple non ha restituito una credenziale valida",
+    "appleError": "Non è stato possibile accedere con Apple"
   },
   "tabs": {
     "home": "Home",
@@ -37,6 +48,8 @@
     "settings": "Config."
   },
   "home": {
+    "noAddressResults": "Non abbiamo trovato indirizzi per questa ricerca.",
+    "searchUnavailable": "Non è stato possibile cercare gli indirizzi. Riprova.",
     "nearbyParking": "Parkings disponibili",
     "searchAddress": "Cerca un indirizzo"
   },
@@ -71,6 +84,7 @@
     "total": "Totale",
     "priceCalculation": "{{price}} x {{hours}} h",
     "invalidTime": "L'orario di uscita deve essere successivo a quello di ingresso.",
+    "minimumDuration": "La prenotazione deve durare almeno un'ora.",
     "invalidDateTime": "Seleziona una data e un orario futuri.",
     "confirmAndPay": "Conferma e paga",
     "paymentMethod": "Metodo di pagamento",
@@ -182,8 +196,12 @@
     "lastName": "COGNOME",
     "phone": "TELEFONO",
     "email": "EMAIL",
-    "save": "Salva modifiche",
-    "required": "Inserisci nome e cognome.",
+      "save": "Salva modifiche",
+      "phoneVerificationHint": "Abbiamo inviato un codice SMS a {{phone}}. Inseriscilo per confermare il nuovo numero.",
+      "verificationCode": "CODICE DI VERIFICA",
+      "confirmPhone": "Conferma numero",
+      "invalidVerificationCode": "Inserisci il codice ricevuto via SMS.",
+      "required": "Inserisci nome e cognome.",
     "photoPermission": "Serve il permesso per accedere alle tue foto."
   },
   "support": {

@@ -7,11 +7,14 @@ import { SocialButtonProps } from "./SocialButton.types";
 export function SocialButton({
   provider,
   onPress,
+  label,
+  disabled = false,
 }: SocialButtonProps) {
   return (
     <Pressable
-      style={styles.button}
+      style={[styles.button, disabled && styles.buttonDisabled]}
       onPress={onPress}
+      disabled={disabled}
     >
       <AntDesign
         name={provider}
@@ -20,7 +23,7 @@ export function SocialButton({
       />
 
       <Text style={styles.text}>
-        {provider === "google" ? "Google" : "Apple"}
+        {label ?? (provider === "google" ? "Google" : "Apple")}
       </Text>
     </Pressable>
   );

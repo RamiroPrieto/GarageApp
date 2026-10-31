@@ -21,15 +21,26 @@
     "passwordPlaceholder": "At least 8 characters",
     "forgotPassword": "Forgot your password?",
     "orContinueWith": "or continue with",
+    "continueWithGoogle": "Google",
+    "signUpWithGoogle": "Sign up with Google",
     "invalidEmail": "Enter a valid email",
     "passwordMin": "The password must be at least 8 characters",
     "completeFields": "Fill in all fields",
     "invalidPhone": "Enter a valid phone number",
     "registerCheckEmail": "Check your email to confirm your account before logging in.",
+    "phoneCodeSent": "We sent you a verification code by SMS.",
+    "phoneCodeResent": "We sent you a new code by SMS.",
+    "phoneCodeInstructions": "Enter the SMS code sent to this account's phone number.",
+    "phoneCode": "SMS CODE",
+    "confirmPhone": "Confirm number",
+    "resendPhoneCode": "Resend code",
+    "invalidPhoneCode": "Enter the code you received by SMS.",
     "genericError": "Something went wrong",
     "googleError": "Unable to sign in with Google",
     "googleInvalidCredential": "Google did not return a valid credential",
-    "appleUnavailable": "Apple Sign-In is not available yet"
+    "appleUnavailable": "Apple Sign-In is not available yet",
+    "appleInvalidCredential": "Apple did not return a valid credential",
+    "appleError": "Could not sign in with Apple"
   },
   "tabs": {
     "home": "Home",
@@ -37,6 +48,8 @@
     "settings": "Settings"
   },
   "home": {
+    "noAddressResults": "We couldn't find addresses for that search.",
+    "searchUnavailable": "We couldn't search addresses. Please try again.",
     "nearbyParking": "Available parking",
     "searchAddress": "Search an address"
   },
@@ -71,6 +84,7 @@
     "total": "Total",
     "priceCalculation": "{{price}} x {{hours}} h",
     "invalidTime": "The exit time must be after the entry time.",
+    "minimumDuration": "Bookings must be at least one hour long.",
     "invalidDateTime": "Choose a future date and time.",
     "confirmAndPay": "Confirm and pay",
     "paymentMethod": "Payment method",
@@ -182,8 +196,12 @@
     "lastName": "LAST NAME",
     "phone": "PHONE",
     "email": "EMAIL",
-    "save": "Save changes",
-    "required": "Enter your first and last name.",
+      "save": "Save changes",
+      "phoneVerificationHint": "We sent an SMS code to {{phone}}. Enter it to confirm the new number.",
+      "verificationCode": "VERIFICATION CODE",
+      "confirmPhone": "Confirm number",
+      "invalidVerificationCode": "Enter the code you received by SMS.",
+      "required": "Enter your first and last name.",
     "photoPermission": "We need permission to access your photos."
   },
   "support": {

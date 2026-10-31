@@ -15,4 +15,5 @@ export const styles = StyleSheet.create({
   line: { flex: 1, height: 1, backgroundColor: colors.border },
   dividerText: { color: colors.textMuted, marginHorizontal: 12, fontSize: 11, ...typography.regular },
   socialRow: { flexDirection: "row", gap: 12 },
+  appleButton: { flex: 1, height: 46 },
 });
