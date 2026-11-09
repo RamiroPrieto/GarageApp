@@ -2,9 +2,13 @@ import * as SecureStore from "expo-secure-store";
 
 import { t } from "../i18n/translate";
 
-const API_URL = "https://garageappbackend-production.up.railway.app";
+const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL?.trim();
 
-// const API_URL = "http://192.168.0.111:3000";
+if (!configuredApiUrl) {
+  throw new Error("EXPO_PUBLIC_API_URL is not configured");
+}
+
+const API_URL = configuredApiUrl.replace(/\/+$/, "");
 
 const TOKEN_KEY = "auth_token";
 

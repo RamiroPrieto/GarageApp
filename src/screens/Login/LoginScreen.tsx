@@ -30,8 +30,6 @@ export function LoginScreen() {
   const [notice, setNotice] = useState("");
   const [loading, setLoading] = useState(false);
   const [appleAvailable, setAppleAvailable] = useState(false);
-  const [phoneVerificationEmail, setPhoneVerificationEmail] = useState<string | null>(null);
-  const [phoneVerificationCode, setPhoneVerificationCode] = useState("");
   const { login, loginWithGoogle, loginWithApple } = useAuth();
 
   useEffect(() => {
@@ -41,8 +39,8 @@ export function LoginScreen() {
   const validate = () => {
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) return t("auth.invalidEmail");
     if (password.length < 8) return t("auth.passwordMin");
-    if (mode === "register" && (!firstName.trim() || !lastName.trim() || !phone.trim())) return t("auth.completeFields");
-    if (mode === "register" && !/^\+?[1-9]\d{6,14}$/.test(phone.trim())) return t("auth.invalidPhone");
+    if (mode === "register" && (!firstName.trim() || !lastName.trim())) return t("auth.completeFields");
+    if (mode === "register" && phone.trim() && !/^\+?[1-9]\d{6,14}$/.test(phone.trim())) return t("auth.invalidPhone");
     return null;
   };
 
@@ -66,42 +64,9 @@ export function LoginScreen() {
         body: JSON.stringify({ firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), password, phone: phone.trim() }),
       });
       setPassword("");
-      setPhoneVerificationEmail(email.trim());
-      setNotice(t("auth.phoneCodeSent"));
-    } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : t("auth.genericError"));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const confirmPhoneVerification = async () => {
-    if (!phoneVerificationEmail || !/^\d{4,10}$/.test(phoneVerificationCode)) {
-      setError(t("auth.invalidPhoneCode"));
-      return;
-    }
-    try {
-      setError("");
-      setLoading(true);
-      await apiFetch('/auth/phone-verification/confirm', { method: 'POST', body: JSON.stringify({ email: phoneVerificationEmail, code: phoneVerificationCode }) });
-      setPhoneVerificationEmail(null);
-      setPhoneVerificationCode("");
+      setPhone("");
       setMode("login");
       setNotice(t("auth.registerCheckEmail"));
-    } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : t("auth.genericError"));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const resendPhoneVerification = async () => {
-    if (!phoneVerificationEmail || loading) return;
-    try {
-      setError("");
-      setLoading(true);
-      await apiFetch('/auth/phone-verification/request', { method: 'POST', body: JSON.stringify({ email: phoneVerificationEmail }) });
-      setNotice(t("auth.phoneCodeResent"));
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : t("auth.genericError"));
     } finally {
@@ -164,14 +129,6 @@ export function LoginScreen() {
       >
       <View style={styles.hero}><Text style={styles.eyebrow}>{t("auth.welcome")}</Text><Text style={styles.brand}>GarageApp</Text></View>
       <View style={styles.form}>
-        {phoneVerificationEmail ? <>
-          <Text style={styles.notice}>{t("auth.phoneCodeInstructions", { email: phoneVerificationEmail })}</Text>
-          <Input label={t("auth.phoneCode")} value={phoneVerificationCode} onChangeText={setPhoneVerificationCode} keyboardType="number-pad" maxLength={10} />
-          {error !== "" && <Text style={styles.error}>{error}</Text>}
-          {notice !== "" && <Text style={styles.notice}>{notice}</Text>}
-          <Button title={t("auth.confirmPhone")} loading={loading} onPress={confirmPhoneVerification} />
-          <Text style={styles.forgotPassword} onPress={() => void resendPhoneVerification()}>{t("auth.resendPhoneCode")}</Text>
-        </> : <>
         <SegmentedControl value={mode} onChange={setMode} />
         {mode === "register" && <>
           <Input label={t("auth.firstName")} placeholder={t("auth.firstNamePlaceholder")} autoCapitalize="words" value={firstName} onChangeText={setFirstName} />
@@ -180,7 +137,8 @@ export function LoginScreen() {
         </>}
         <Input label={t("auth.email")} placeholder={t("auth.emailPlaceholder")} keyboardType="email-address" autoCapitalize="none" value={email} onChangeText={setEmail} />
         <PasswordInput label={t("auth.password")} placeholder={t("auth.passwordPlaceholder")} value={password} onChangeText={setPassword} />
-        {mode === "login" && <Text style={styles.forgotPassword}>{t("auth.forgotPassword")}</Text>}
+        {/* Password recovery is not available yet. */}
+        {/* {mode === "login" && <Text style={styles.forgotPassword}>{t("auth.forgotPassword")}</Text>} */}
         {error !== "" && <Text style={styles.error}>{error}</Text>}
         {notice !== "" && <Text style={styles.notice}>{notice}</Text>}
         <Button title={mode === "login" ? t("auth.login") : t("auth.register")} loading={loading} onPress={handleSubmit} />
@@ -195,7 +153,6 @@ export function LoginScreen() {
             onPress={handleAppleLogin}
           />}
         </View>
-        </>}
       </View>
       </ScrollView>
       </KeyboardAvoidingView>

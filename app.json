@@ -10,6 +10,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "cc.garageapp.app",
       "usesAppleSignIn": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyDZRAKD5aPsUPXWMuTcUgt7E6B5TVv_NiI"
+      },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -23,10 +26,10 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.ramiro.mpdev.GarageApp",
+      "package": "cc.garageapp.app",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyBHh9N5GA7uz8t-AfQ7aQ1l2XzZCSTBbrU"
+          "apiKey": "AIzaSyA0HGKKiYyMx9CewrglXAjdDNhlaaEgttg"
         }
       }
     },

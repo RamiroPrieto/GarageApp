@@ -26,6 +26,7 @@ const PAYMENT_CONFIRMATION_ATTEMPTS = 8;
 const PAYMENT_CONFIRMATION_INTERVAL_MS = 1_000;
 
 type ApiError = Error & { code?: string };
+type PaymentSheetError = { code?: string; message?: string } | undefined;
 
 function combineDateAndTime(date: Date, time: Date) {
   const value = new Date(date);
@@ -85,6 +86,27 @@ export function ReservationScreen({ route }: { route: ReservationScreenRouteProp
   const formatTime = (value: Date) => value.toLocaleTimeString(dateLocale, { hour: "2-digit", minute: "2-digit", hour12: false });
   const showValidation = (message: string) => show(t("common.error"), message, [{ text: t('common.ok') }]);
 
+  const reportPaymentSheetEvent = async (
+    event: "PAYMENT_INTENT_RESPONSE" | "PAYMENT_SHEET_INIT_STARTED" | "PAYMENT_SHEET_INIT_RESULT" | "PAYMENT_SHEET_PRESENT_STARTED" | "PAYMENT_SHEET_PRESENT_RESULT" | "PAYMENT_FLOW_ERROR",
+    reservationId: number,
+    options: { hasClientSecret?: boolean; error?: PaymentSheetError } = {},
+  ) => {
+    try {
+      await apiFetch('/payments/payment-sheet-log', {
+        method: 'POST',
+        body: JSON.stringify({
+          event,
+          reservationId,
+          hasClientSecret: options.hasClientSecret,
+          errorCode: options.error?.code,
+          errorMessage: options.error?.message,
+        }),
+      });
+    } catch {
+      // Diagnostics must never interfere with a payment attempt.
+    }
+  };
+
   const waitForPaymentConfirmation = async (reservationId: number) => {
     console.log("[reservation-payment] Waiting for payment confirmation", { reservationId });
     for (let attempt = 0; attempt < PAYMENT_CONFIRMATION_ATTEMPTS; attempt += 1) {
@@ -137,10 +159,15 @@ export function ReservationScreen({ route }: { route: ReservationScreenRouteProp
       setPaymentPhase("creatingPaymentIntent");
       const data = await apiFetch("/payments", { method: "POST", body: JSON.stringify({ reservationId: reservation.id, savePaymentMethod: true }) });
       console.log("[reservation-payment] PaymentIntent created", { reservationId });
+      await reportPaymentSheetEvent("PAYMENT_INTENT_RESPONSE", reservation.id, { hasClientSecret: Boolean(data.clientSecret) });
+      await reportPaymentSheetEvent("PAYMENT_SHEET_INIT_STARTED", reservation.id);
       const { error: initError } = await initPaymentSheet({ merchantDisplayName: "GarageApp", paymentIntentClientSecret: data.clientSecret });
+      await reportPaymentSheetEvent("PAYMENT_SHEET_INIT_RESULT", reservation.id, { error: initError });
       if (initError) throw initError;
       setPaymentPhase("paymentSheet");
+      await reportPaymentSheetEvent("PAYMENT_SHEET_PRESENT_STARTED", reservation.id);
       const { error: paymentError } = await presentPaymentSheet();
+      await reportPaymentSheetEvent("PAYMENT_SHEET_PRESENT_RESULT", reservation.id, { error: paymentError });
       console.log("[reservation-payment] PaymentSheet result", { reservationId, success: !paymentError, code: paymentError?.code });
       if (paymentError) {
         console.log(paymentError.code === "Canceled" ? "[reservation-payment] PaymentSheet cancel" : "[reservation-payment] PaymentSheet error", { reservationId, code: paymentError.code });
@@ -163,6 +190,9 @@ export function ReservationScreen({ route }: { route: ReservationScreenRouteProp
     } catch (error) {
       const apiError = error as ApiError;
       console.log("[reservation-payment] Reservation payment error", { reservationId, code: apiError.code, message: apiError.message });
+      if (reservationId !== null) {
+        await reportPaymentSheetEvent("PAYMENT_FLOW_ERROR", reservationId, { error: apiError });
+      }
       if (reservationId !== null && !paymentCompletedInSheet) await cancelPendingReservation(reservationId);
       showValidation(apiError.code === "INSUFFICIENT_CREDITS" ? t("reservation.insufficientCredits") : t("reservation.paymentFailed"));
     } finally {
